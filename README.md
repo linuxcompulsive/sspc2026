@@ -1,13 +1,13 @@
 # SSPC2026 v1.1 — Sistema de Seguretat Pública de Catalunya 2026
 
-Aplicació estàtica per a GitHub Pages, adaptada per a **classes projectades** i per a **repàs individual** des del mòbil o l’ordinador. No requereix cap servidor propi ni base de dades externa.
+Aplicació estàtica per a GitHub Pages, adaptada per a executar-se des del mòbil o l’ordinador. No requereix cap servidor propi ni base de dades externa.
 
-## Funcionament a l'aula
+## Funcionament
 
-1. El professor prepara un test amb **10, 30 o 50** preguntes de tot el temari o d'una lliçó.
-2. Un alumne marca les respostes a l'ordinador. La resta de la classe veu les preguntes al projector i anota les lletres que considera correctes.
+1. Es tria un test amb **10, 30 o 50** preguntes de tot el temari o d'una lliçó.
+2. Es marca les respostes a l'ordinador.
 3. El botó **Mode projector** amplia l'enunciat i les alternatives per a la pantalla gran; es pot desactivar en qualsevol moment.
-4. En acabar, apareix la **graella de solucions** (1 → A, 2 → C...), calculada segons l'ordre aleatori real de les opcions en aquest test, a més de la nota de l'alumne que ha respost.
+4. En acabar, apareix la **graella de solucions** (1 → A, 2 → C...), calculada segons l'ordre aleatori real de les opcions en aquest test, a més de la nota.
 5. El solucionari es pot **ampliar al projector**, **copiar** o **imprimir**. Les preguntes errònies també es poden revisar individualment.
 
 **Nota:** cada test barreja preguntes i opcions, per això cada nova sessió pot tenir un solucionari diferent. El solucionari és correcte per a la sessió que s'acaba de fer, no per a altres tests.
@@ -45,4 +45,4 @@ Les edicions fetes a l'aplicació només es guarden al navegador; per compartir-
 
 ## Privacitat i autoavaluació
 
-El banc de preguntes i les solucions són **públics** a GitHub Pages: adequat per practicar, no per a un examen amb respostes secretes. Les respostes i notes són locals al dispositiu, i no s'envien al professor. Cada alumne pot obrir l'URL a casa i practicar pel seu compte.
+El banc de preguntes i les solucions són **públics** a GitHub Pages: adequat per practicar, no per a un examen amb respostes secretes. Les respostes i notes són locals al dispositiu, i no s'envien a ningú. Cada persona pot obrir l'URL a pc o mòbil i practicar pel seu compte.
