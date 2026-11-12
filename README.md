@@ -1,48 +1,74 @@
-# SSPC2026 v1.1 — Sistema de Seguretat Pública de Catalunya 2026
+# INSPECTOR 2.2 — Banc de preguntes en CSV
 
-Aplicació estàtica per a GitHub Pages, adaptada per a **classes projectades** i per a **repàs individual** des del mòbil o l’ordinador. No requereix cap servidor propi ni base de dades externa.
+Aplicació HTML, CSS i JavaScript per preparar els tests de les oposicions d'inspector/a de Mossos d'Esquadra. Adaptada a PC i mòbil; funciona gratuïtament a GitHub Pages. **El fitxer principal del banc és `preguntes.csv`; ja no cal generar ni mantenir `preguntes.json`.**
 
-## Funcionament a l'aula
+## Fitxers
 
-1. El professor prepara un test amb **10, 30 o 50** preguntes de tot el temari o d'una lliçó.
-2. Un alumne marca les respostes a l'ordinador. La resta de la classe veu les preguntes al projector i anota les lletres que considera correctes.
-3. El botó **Mode projector** amplia l'enunciat i les alternatives per a la pantalla gran; es pot desactivar en qualsevol moment.
-4. En acabar, apareix la **graella de solucions** (1 → A, 2 → C...), calculada segons l'ordre aleatori real de les opcions en aquest test, a més de la nota de l'alumne que ha respost.
-5. El solucionari es pot **ampliar al projector**, **copiar** o **imprimir**. Les preguntes errònies també es poden revisar individualment.
+- **`index.html`**: pàgina i banc de 59 preguntes incorporat com a còpia de prova quan l'obres amb doble clic (`file://`).
+- **`styles.css`**: aparença visual adaptativa (PC i mòbil).
+- **`app.js`**: tests, filtres, revisió d'errors, importació i exportació CSV.
+- **`preguntes.csv`**: **banc principal** que la pàgina carrega AUTOMÀTICAMENT a GitHub Pages. Inclou els 59 ítems i els solucionaris del document «M8 TEST.docx».
+- **`plantilla-preguntes.csv`**: capçalera per incorporar noves preguntes.
 
-**Nota:** cada test barreja preguntes i opcions, per això cada nova sessió pot tenir un solucionari diferent. El solucionari és correcte per a la sessió que s'acaba de fer, no per a altres tests.
+## Format CSV
 
-## Format de preguntes.csv
-
-Capçalera exacta:
+La primera fila ha de contenir les columnes següents:
 
 ```csv
-id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio
+id,bloc,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio,origen
 ```
 
-- `id`: identificador únic, com `1.1-001` o `1.2-013`.
-- `tema`: número de lliçó, per exemple `1.1`, `1.2` (desar com a text en un full de càlcul).
-- `enunciat`: pregunta.
-- `opcio_a`, `opcio_b`, `opcio_c`, `opcio_d`: quatre opcions no buides.
-- `correcta`: lletra A, B, C o D **de les opcions originals del CSV**.
-- `explicacio`: camp opcional.
+- `id`: únic per a cada pregunta, per exemple `8.1-T-001`.
+- `bloc`: enter entre 1 i 8.
+- `tema`: text com `8.1`, `7.3`.
+- `enunciat`: text de la pregunta.
+- `opcio_a`, `opcio_b`, `opcio_c`, `opcio_d`: les quatre alternatives.
+- `correcta`: lletra `A`, `B`, `C` o `D`.
+- `explicacio` i `origen`: columnes opcionals (pots mantenir-les en blanc).
 
-**El camp `bloc` s'ha eliminat.** Si s'importa un CSV antic que contingui la columna `bloc`, l'aplicació la ignora. Quan s'exporti des de la versió 1.1, el fitxer ja no inclourà aquesta columna.
+Desa en **CSV UTF-8**. El separador pot ser coma `,` o punt i coma `;` (el programa el detecta a la capçalera). Quan algun text conté comes, cometes o salts de línia, cal fer servir les regles CSV habituals: cometes al voltant del camp i cometes internes duplicades. Recomanat: utilitzar el botó **Exportar CSV** de l'aplicació o l'opció «Desar com → CSV UTF-8» de LibreOffice.
 
-Codificació UTF-8. Separador coma. Escapa amb cometes dobles els textos que tinguin comes o salts de línia; dins d'un camp entre cometes, escriu `""` per a una cometa literal. Hi ha una plantilla inclosa.
+## Actualitzar el banc de GitHub (sense JSON)
 
-## Publicar a GitHub Pages
+1. Obre `preguntes.csv` a LibreOffice Calc o Excel.
+2. Afegeix o modifica preguntes, respectant la capçalera i els identificadors únics.
+3. Desa com a **CSV UTF-8** i conserva el nom exacte `preguntes.csv`.
+4. Entra a https://github.com/linuxcompulsive/inspector-tests .
+5. Obre `preguntes.csv`, clica l'icona del llapis (Edit) si vols editar-lo en línia, **o** substitueix el fitxer mitjançant **Add file → Upload files**; confirma amb **Commit changes**.
+6. Passats uns instants, refresca https://linuxcompulsive.github.io/inspector-tests/ . El programa llegeix el CSV cada vegada que s'obre.
+7. Si has editat/importat preguntes dins del simulador i manté una còpia local, obre **Preguntes → Restaurar CSV de GitHub**. **Exporta abans el banc local** si no vols perdre aquests canvis.
 
-1. Crea o obre el repositori (per exemple, `linuxcompulsive/sspc2026`).
-2. Puja `index.html`, `styles.css`, `app.js` i `preguntes.csv` a l'arrel del repositori.
-3. Activa **Settings → Pages → Deploy from a branch → main → /(root)**.
-4. La web quedarà disponible a `https://linuxcompulsive.github.io/sspc2026/` si fas servir aquests noms.
-5. Per actualitzar preguntes, substitueix únicament **`preguntes.csv`** a GitHub.
+**En actualitzar les preguntes només cal tocar `preguntes.csv`.** `index.html`, `app.js` i `styles.css` es mantenen.
 
-El CSV en producció és inicialment **buit** perquè no s'afegeixin preguntes de demostració al material docent. Per provar l'aplicació, pots importar el fitxer separat **`preguntes_demo.csv`** (10 preguntes fictícies, NO corresponents al temari) des de la pestanya **Preguntes**. No el publiquis com a banc oficial. Per la càrrega automàtica, obre la web publicada o un servidor HTTP local; els navegadors no solen permetre llegir el CSV automàticament quan obres `index.html` amb `file://`.
+## Passar de la versió 2.1 a la 2.2
 
-Les edicions fetes a l'aplicació només es guarden al navegador; per compartir-les cal exportar-les i pujar `preguntes.csv` a GitHub. Si has editat el banc local, utilitza l'opció **Restaurar CSV de GitHub** per tornar a carregar la versió publicada.
+1. Puja/substitueix `index.html`, `app.js`, `styles.css` i `preguntes.csv` a l'arrel de `inspector-tests`.
+2. `preguntes.json` de la versió anterior **ja no s'utilitza** i el pots eliminar de GitHub quan vulguis (és opcional).
+3. `plantilla-preguntes.csv` és útil però no imprescindible per a l'execució.
+4. Assegura't que Pages continuï configurat a `main` / `/(root)`.
 
-## Privacitat i autoavaluació
+No cal tornar a crear el repositori ni reactivar GitHub Pages.
 
-El banc de preguntes i les solucions són **públics** a GitHub Pages: adequat per practicar, no per a un examen amb respostes secretes. Les respostes i notes són locals al dispositiu, i no s'envien al professor. Cada alumne pot obrir l'URL a casa i practicar pel seu compte.
+## Proves locals
+
+- **Doble clic a `index.html`:** funciona, amb les 59 preguntes del bloc 8 **integrades com a còpia inicial**, sense llegir automàticament el CSV del disc. Per provar un CSV modificat localment, utilitza **Preguntes → Importar fitxer**.
+- **Per provar la lectura automàtica del CSV abans de pujar-lo:** obre un terminal a la carpeta, executa `python3 -m http.server 8000` i visita `http://localhost:8000/`. Llavors es carrega `preguntes.csv` directament, igual que a GitHub Pages.
+
+## Preguntes incloses
+
+| Qüestionari original | Preguntes |
+|---|---:|
+| Diagnòstic inicial | 10 |
+| Tema 8.1 · Transparència | 5 |
+| Tema 8.2 · Protecció de dades personals | 8 |
+| Tema 8.3 · Dades en l'àmbit penal i policial | 12 |
+| Test global de consolidació | 24 |
+| **Total** | **59** |
+
+Classificació per tema: **8.1: 16, 8.2: 17, 8.3: 26**. Alguns conceptes són repetits perquè així apareixen en diferents tests del material.
+
+**Advertiment del document original:** la pregunta `8.2-D-004` té una nota sobre la necessitat de contrastar-ne l'edat i el redactat legal. Les claus es conserven tal com apareixen al Word aportat i no constitueixen una verificació normativa independent.
+
+## Desament i privacitat
+
+Els resultats, l'historial i les respostes es desen al navegador del dispositiu (localStorage/sessionStorage). Quan **edites o importes preguntes a l'aplicació**, se'n crea una còpia local perquè no es perdin en recarregar; aquesta còpia té preferència fins que tries **Restaurar CSV de GitHub**. Quan només edites el CSV a GitHub, la nova versió es mostra automàticament als navegadors sense modificacions locals. GitHub Pages és estàtic i no pot escriure el CSV al repositori: per compartir canvis fets a l'editor del programa, exporta el CSV i puja'l manualment.
