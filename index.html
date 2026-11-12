@@ -1,0 +1,144 @@
+<!doctype html>
+
+<html lang="ca">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#102d4d" name="theme-color"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta content="SSPC2026: tests interactius i autocorrecció en grup del Sistema de Seguretat Pública de Catalunya 2026." name="description"/>
+<title>SSPC2026 · Sistema de Seguretat Pública de Catalunya 2026</title>
+<link href="styles.css" rel="stylesheet"/>
+<!-- Còpia de demostració local sense servidor; a GitHub preval preguntes.csv. -->
+<script id="embeddedQuestionBank" type="text/plain">id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio
+</script>
+<script defer="" src="app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Salta al contingut</a>
+<header class="site-header">
+<div class="header-inner wrap">
+<button aria-label="Torna a l'inici" class="logo-btn" data-nav="home" type="button">
+<span aria-hidden="true" class="logo-symbol">S<span class="logo-dot">·</span></span>
+<span class="brand-text"><strong>SSPC2026</strong><small>VERSIÓ 1.1</small></span>
+</button>
+<nav aria-label="Navegació principal" class="main-nav">
+<button class="nav-link active" data-nav="home" type="button">Tests</button>
+<button class="nav-link" data-nav="bank" type="button">Preguntes <span class="nav-number" id="navBankCount">0</span></button>
+<button class="nav-link" data-nav="help" type="button">Ajuda</button>
+</nav>
+</div>
+</header>
+<main class="wrap main-content" id="main">
+<div aria-live="polite" class="notice" hidden="" id="notice" role="status"></div>
+<section aria-labelledby="homeHeading" class="view" id="homeView">
+<div class="hero"><div class="hero-copy"><p class="eyebrow">SSPC2026  /  V1.1</p><h1 id="homeHeading">Sistema de Seguretat<br/>Pública de Catalunya <em>2026</em></h1></div><div aria-hidden="true" class="hero-decoration"><span class="hero-orbit orbit-one"></span><span class="hero-orbit orbit-two"></span><span class="hero-mark">SSPC</span></div></div>
+<div class="demo-banner" hidden="" id="demoBanner">
+<span aria-hidden="true" class="demo-icon">ⓘ</span>
+<p>Aquest banc conté preguntes de demostració. Substitueix-les per les del curs des de l’apartat Preguntes.</p>
+</div>
+<div class="resume-banner" hidden="" id="resumeBanner">
+<div><strong>Tens un test a mitges</strong><p id="resumeDescription">Pots continuar-lo on el vas deixar.</p></div>
+<div class="resume-actions"><button class="btn btn-primary" id="resumeBtn" type="button">Continuar test →</button><button class="btn btn-outline" id="discardBtn" type="button">Descartar</button></div>
+</div>
+<div aria-label="Estadístiques del banc" class="stat-grid">
+<div class="stat-card"><span class="stat-label">Preguntes disponibles</span><strong id="statQuestions">—</strong><span class="stat-meta">al banc de preguntes</span></div>
+<div class="stat-card"><span class="stat-label">Temes</span><strong id="statTopics">—</strong><span class="stat-meta">disponibles</span></div>
+<div class="stat-card suppressed-stat"><span class="stat-label">Tests finalitzats</span><strong id="statTests">—</strong><span class="stat-meta">en aquest dispositiu</span></div>
+<div class="stat-card accent-stat suppressed-stat"><span class="stat-label">Preguntes per repassar</span><strong id="statErrors">—</strong><span class="stat-meta">fallades en tests anteriors</span></div>
+</div>
+<div class="workspace-grid">
+<section aria-labelledby="setupHeading" class="panel setup-panel">
+<div class="panel-heading"><div><p class="section-kicker">CONFIGURACIÓ</p><h2 id="setupHeading">Prepara el test</h2></div></div>
+<fieldset class="fieldset-reset">
+<legend class="field-title">Quin contingut vols practicar?</legend>
+<div class="scope-options" id="scopeOptions">
+<label class="scope-option"><input checked="" name="scope" type="radio" value="all"/><span aria-hidden="true" class="scope-icon">◎</span><span class="scope-title">Tot el temari</span></label>
+<label class="scope-option"><input name="scope" type="radio" value="topic"/><span aria-hidden="true" class="scope-icon">▤</span><span class="scope-title">Una lliçó</span></label>
+</div>
+</fieldset>
+<div class="filter-fields" hidden="" id="filterFields">
+<div class="field" id="topicField"><label for="topicSelect">Lliçó</label><select id="topicSelect"></select></div>
+</div>
+<fieldset class="fieldset-reset amount-fieldset">
+<legend class="field-title">Quantes preguntes?</legend>
+<div class="amount-options">
+<label><input checked="" name="amount" type="radio" value="10"/><span>10<small>Ràpid</small></span></label>
+<label><input name="amount" type="radio" value="30"/><span>30<small>Estàndard</small></span></label>
+<label><input name="amount" type="radio" value="50"/><span>50<small>Intensiu</small></span></label>
+</div>
+</fieldset>
+<div class="setup-foot">
+<p aria-live="polite" class="available-hint" id="availableHint">—</p>
+<button class="btn btn-primary btn-large" id="startBtn" type="button">Començar el test <span aria-hidden="true">→</span></button>
+</div>
+</section>
+<aside class="side-stack">
+<section aria-labelledby="repeatHeading" class="panel side-panel">
+<div class="side-heading"><span aria-hidden="true" class="circle-icon">↻</span><div><h2 id="repeatHeading">Repassar errors</h2></div></div>
+<p>Torna a practicar les preguntes fallades.</p>
+<button class="btn btn-secondary" id="repeatSavedBtn" type="button">Practicar errors <span id="pendingCount">(0)</span></button>
+</section>
+<details class="panel history-panel"><summary>Historial de tests</summary><div class="history-list" id="historyList"><p class="muted">Encara no has finalitzat cap test.</p></div></details>
+</aside>
+</div>
+</section>
+<section aria-labelledby="quizHeading" class="view" hidden="" id="quizView">
+<div class="test-topbar"><button class="back-link" id="quitTestBtn" type="button">← Abandonar test</button><span class="test-badge" id="quizScope">Tot el temari</span><button class="btn btn-outline projection-button" id="projectionBtn" type="button" aria-pressed="false" title="Amplia les preguntes i les opcions per projectar a l'aula">▣ Mode projector</button><span class="time-chip" id="testTime">00:00</span></div>
+<div class="quiz-layout">
+<section aria-labelledby="quizHeading" class="panel question-panel">
+<div class="quiz-progress-info"><span class="section-kicker" id="questionCounter">PREGUNTA 1 DE 10</span><span class="answered-counter" id="answeredCounter">0 respostes</span></div>
+<div aria-label="Preguntes respostes" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-track" id="progressTrack" role="progressbar"><div class="progress-fill" id="progressFill"></div></div>
+<p class="question-meta" id="questionMeta"></p>
+<h1 class="question-title" id="quizHeading"></h1>
+<div aria-label="Opcions de resposta" class="answers" id="answerOptions" role="radiogroup"></div>
+<div class="question-actions"><button class="btn btn-outline" id="prevBtn" type="button">← Anterior</button><button class="btn btn-primary" id="nextBtn" type="button">Següent →</button><button class="btn btn-primary" hidden="" id="finishBtn" type="button">Finalitza i corregeix ✓</button></div>
+</section>
+<aside class="panel quiz-aside"><div class="panel-heading small"><div><p class="section-kicker">NAVEGACIÓ</p><h2>Preguntes</h2></div></div><p class="muted small-text">Toca un número per canviar de pregunta.</p><div class="question-grid" id="questionGrid"></div><div class="legend"><span><i class="legend-dot legend-answered"></i> Resposta marcada</span><span><i class="legend-dot legend-current"></i> Actual</span></div><button class="btn btn-secondary full-width" id="finishAsideBtn" type="button">Finalitza el test</button></aside>
+</div>
+</section>
+<section aria-labelledby="resultsHeading" class="view" hidden="" id="resultView">
+<div class="results-intro"><div><p class="section-kicker">TEST FINALITZAT</p><h1 id="resultsHeading">Els teus resultats</h1><p class="muted" id="resultScope"></p></div><button class="btn btn-outline" data-nav="home" type="button">← Preparar un altre test</button></div>
+<div class="panel result-card"><div class="score-circle"><span id="resultPercent">—</span><small>D'ENCERTS</small></div><div class="score-content"><h2 id="scoreMessage">Test completat</h2><p id="scoreSentence">—</p><div class="score-breakdown"><span class="score-good"><strong id="scoreRight">0</strong> encertades</span><span class="score-bad"><strong id="scoreWrong">0</strong> errònies</span><span class="score-empty"><strong id="scoreBlank">0</strong> sense respondre</span></div></div></div>
+<section aria-labelledby="keyHeading" class="panel answer-key-panel" id="answerKeyPanel"><div class="answer-key-header"><div><p class="section-kicker">AUTOCORRECCIÓ A L'AULA</p><h2 id="keyHeading">Solucionari del test</h2><p>En l'ordre que s'han projectat les preguntes, amb les lletres que s'han vist a la pantalla.</p></div><div class="answer-key-actions"><button class="btn btn-primary" id="projectKeyBtn" type="button" aria-pressed="false">▣ Ampliar solucionari</button><button class="btn btn-outline" id="copyKeyBtn" type="button">Copiar solucions</button><button class="btn btn-secondary" id="printKeyBtn" type="button">Imprimir</button></div></div><div aria-label="Respostes correctes per ordre de pregunta" class="answer-key-grid" id="answerKeyGrid"></div><p class="answer-key-note">Aquestes són les respostes correctes, no les que ha marcat l'alumne que ha fet el test.</p></section>
+<div class="result-toolbar"><div><p class="section-kicker">REVISIÓ D'APRENENTATGE</p><h2>Correcció de preguntes</h2><p class="muted" id="reviewHint">Les errònies i les no respostes apareixen primer.</p></div><div class="result-buttons"><button class="btn btn-primary" id="repeatWrongBtn" type="button">Repetir les fallades ↻</button><button class="btn btn-outline" id="toggleAllBtn" type="button">Veure totes</button></div></div>
+<div class="review-list" id="reviewList"></div>
+</section>
+<section aria-labelledby="bankHeading" class="view" hidden="" id="bankView">
+<div class="page-intro"><p class="section-kicker">BANC CSV</p><h1 id="bankHeading">Preguntes</h1><p>Importa o administra el banc CSV.</p></div>
+<div class="bank-actions panel">
+<div class="bank-summary"><strong id="bankCount">0</strong><span>preguntes disponibles</span><span class="bank-divider"></span><strong id="bankTopicCount">0</strong><span>temes</span></div>
+<div class="bank-toolbar"><button class="btn btn-primary" id="addQuestionBtn" type="button">+ Nova pregunta</button><button class="btn btn-secondary" id="importBtn" type="button">↑ Importar fitxer</button><button class="btn btn-outline" id="exportBtn" type="button">↓ Exportar CSV</button></div>
+<input accept=".csv,text/csv" aria-label="Fitxer de preguntes" hidden="" id="importFile" type="file"/>
+<div class="import-options" hidden="" id="importOptions"><label for="importMode">Com s'han d'importar les preguntes?</label><select id="importMode"><option value="replace">Substituir tot el banc actual</option><option value="merge">Afegir-les / actualitzar les que tinguin el mateix ID</option></select><button class="btn btn-primary" id="chooseImportBtn" type="button">Seleccionar fitxer .csv</button><button class="btn btn-plain" id="cancelImportBtn" type="button">Cancel·lar</button></div>
+</div>
+<div class="local-warning" id="localWarning">Els canvis fets aquí es guarden en aquest navegador. Per publicar-los, exporta el CSV i substitueix preguntes.csv a GitHub.</div>
+<form class="panel editor-panel" hidden="" id="questionForm" novalidate="">
+<div class="panel-heading"><div><p class="section-kicker">EDITOR</p><h2 id="editorHeading">Afegir pregunta</h2></div><button aria-label="Tancar editor" class="icon-close" id="closeEditorBtn" type="button">×</button></div>
+<div class="editor-grid"><div class="field"><label for="editId">Identificador únic *</label><input id="editId" maxlength="70" placeholder="p. ex. 1.2-001" required=""/></div><div class="field"><label for="editTema">Tema *</label><input id="editTema" maxlength="100" placeholder="p. ex. 1.2" required=""/></div><div class="field"><label for="editCorrecta">Resposta correcta *</label><select id="editCorrecta"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div></div>
+<div class="field"><label for="editEnunciat">Enunciat *</label><textarea id="editEnunciat" maxlength="3000" placeholder="Escriu aquí la pregunta..." required="" rows="3"></textarea></div>
+<div class="editor-grid options-grid"><div class="field"><label for="editA">Opció A *</label><textarea id="editA" required="" rows="2"></textarea></div><div class="field"><label for="editB">Opció B *</label><textarea id="editB" required="" rows="2"></textarea></div><div class="field"><label for="editC">Opció C *</label><textarea id="editC" required="" rows="2"></textarea></div><div class="field"><label for="editD">Opció D *</label><textarea id="editD" required="" rows="2"></textarea></div></div>
+<div class="field"><label for="editExplicacio">Explicació (opcional)</label><textarea id="editExplicacio" placeholder="Per què és aquesta la resposta correcta?" rows="2"></textarea></div>
+<p class="form-error" hidden="" id="editError" role="alert"></p><div class="editor-actions"><button class="btn btn-primary" type="submit">Desar pregunta</button><button class="btn btn-outline" id="cancelEditBtn" type="button">Cancel·lar</button></div>
+</form>
+<div class="panel question-list-panel"><div class="list-toolbar"><div class="field search-field"><label for="bankSearch">Cerca al banc</label><input id="bankSearch" placeholder="Text de la pregunta o lliçó..." type="search"/></div><div class="list-tools"><button class="text-action" id="downloadTemplateBtn" type="button">Baixar plantilla CSV ↘</button><button class="text-action danger-text" hidden="" id="removeDemoBtn" type="button">Eliminar exemples demo</button><button class="text-action danger-text" id="resetBankBtn" type="button">Restaurar CSV de GitHub</button></div></div><div class="bank-question-list" id="questionList"></div><p class="list-foot" id="bankListFoot"></p></div>
+</section>
+<section aria-labelledby="helpHeading" class="view" hidden="" id="helpView">
+<div class="page-intro"><p class="section-kicker">INSTRUCCIONS</p><h1 id="helpHeading">Ajuda</h1><p>Funcionament de SSPC2026.</p></div>
+<div class="help-grid"><div class="panel help-card"><span class="help-number">01</span><h2>Carrega les preguntes</h2><p>Importa el fitxer CSV o afegeix preguntes a l’editor.</p></div><div class="panel help-card"><span class="help-number">02</span><h2>Tria el teu temari</h2><p>Selecciona tot el temari o una lliçó concreta. Tria entre <strong>10, 30 o 50</strong> preguntes (sense repeticions).</p></div><div class="panel help-card"><span class="help-number">03</span><h2>Respon i revisa</h2><p>Un alumne marca les respostes a l’ordinador mentre la resta anota les seves. Al final apareix una graella de solucions numerades per autocorregir-se. Des de casa cada alumne pot practicar individualment.</p></div><div class="panel help-card"><span class="help-number">04</span><h2>Guarda el banc a GitHub</h2><p>Exporta el banc en CSV i substitueix <code>preguntes.csv</code> al teu repositori. Es carregarà automàticament a PC i mòbil.</p></div></div>
+<section class="panel help-details"><h2>Format de les dades</h2>
+<p>El programa carrega <strong>automàticament <code>preguntes.csv</code></strong> des de GitHub Pages. No cal convertir-lo a JSON.</p>
+<p>La primera fila ha de ser aquesta capçalera, en aquest ordre:</p>
+<pre><code>id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio</code></pre>
+<p>Una pregunta ocupa una fila. El camp <code>tema</code> identifica la lliçó (per exemple <code>1.2</code>); el camp <code>bloc</code> ja no existeix. <code>correcta</code> és una lletra A/B/C/D. La columna <code>explicacio</code> és opcional. CSV en UTF-8; les comes, les cometes i els salts de línia es tracten correctament. Els CSV antics que tinguin <code>bloc</code> es poden importar: aquesta columna s’ignora i s’elimina en exportar.</p>
+<h3>Actualitzar preguntes a GitHub</h3><p>Edita <code>preguntes.csv</code> amb LibreOffice o Excel, desa'l en CSV UTF-8 i substitueix-lo a GitHub. <strong>No cal tocar index.html ni app.js.</strong> Si tens canvis locals, exporta'ls abans de prémer «Restaurar CSV de GitHub».</p>
+<h3>Dades i privacitat</h3><p>Les respostes i els resultats es desen al navegador de cada dispositiu. GitHub Pages no pot escriure automàticament al repositori: si edites preguntes dins del programa, prem <strong>Exportar CSV</strong> i penja'l a GitHub manualment. Els resultats de PC i mòbil no se sincronitzen.</p>
+<h3>Correcció</h3><p>Una resposta correcta suma un encert; una incorrecta, un error; les no contestades es compten a part. El percentatge és <strong>encerts / preguntes totals × 100</strong>, sense penalització addicional.</p>
+</section>
+</section>
+</main>
+<footer class="site-footer wrap">SSPC2026 · v1.1</footer>
+</body>
+</html>
