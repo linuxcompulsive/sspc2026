@@ -1,1 +1,2 @@
-﻿id,bloc,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio,origen
+id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio
+1.1-001,1.1,"Pregunta de demostració (substitueix-la)","Opció A","Opció B","Opció C","Opció D",B,"Explicació opcional"

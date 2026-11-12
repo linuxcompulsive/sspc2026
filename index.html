@@ -1,228 +1,144 @@
 <!doctype html>
+
 <html lang="ca">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#201544">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <meta name="description" content="Tests interactius per preparar les oposicions d'inspector/a: per tema, bloc o tot el temari.">
-  <title>INSPECTOR · Entrenador de tests</title>
-  <link rel="stylesheet" href="styles.css">
-  <!-- Còpia de demostració local sense servidor; a GitHub preval preguntes.csv. -->
-  <script id="embeddedQuestionBank" type="text/plain">id,bloc,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio,origen
-8.1-D-001,8,8.1,A partir de quina edat es pot exercir el dret d’accés a la informació pública segons la Llei 19/2014?,14 anys,16 anys,18 anys,21 anys,B,La Llei 19/2014 reconeix l’exercici del dret des dels 16 anys.,Diagnòstic inicial
-8.1-D-002,8,8.1,Quants membres integren la GAIP segons l’article 40 del temari?,3 a 5,5 a 7,3 a 7,Exactament 5,A,La GAIP està integrada per un mínim de 3 i un màxim de 5 membres.,Diagnòstic inicial
-8.1-D-003,8,8.1,Quin és el termini per interposar una reclamació davant la GAIP?,15 dies,1 mes,2 mesos,3 mesos,B,El termini és d’un mes des dels moments previstos a la llei.,Diagnòstic inicial
-8.2-D-004,8,8.2,"Quan pot un menor consentir autònomament el tractament de les seves dades segons la LO 3/2018, amb les excepcions legals?",Des dels 12 anys,Des dels 14 anys,Quan sigui més gran de 14 anys,Des dels 16 anys,C,Es conserva la formulació i la clau del primer test original; cal tenir present el redactat legal precís quan s’estudiï.,Diagnòstic inicial
-8.3-D-005,8,8.3,Quina és la revisió màxima periòdica de conservació de dades de la LO 7/2021?,Cada any,Cada 2 anys,Cada 3 anys,Cada 5 anys,C,"Cal revisar la necessitat de conservar les dades, com a màxim, cada 3 anys.",Diagnòstic inicial
-8.3-D-006,8,8.3,Quin és el termini general màxim de supressió de dades de la LO 7/2021?,5 anys,10 anys,15 anys,"20 anys, amb excepcions",D,"Amb caràcter general, 20 anys, llevat de supòsits justificats.",Diagnòstic inicial
-8.3-D-007,8,8.3,Quina és la durada màxima inicial de l’autorització de dispositius mòbils policials?,15 dies,1 mes,2 mesos,6 mesos,B,"Un mes inicial, prorrogable per un altre mes.",Diagnòstic inicial
-8.3-D-008,8,8.3,"En cas d’urgència, en quin termini màxim s’ha de comunicar l’ús de dispositius mòbils policials?",12 hores,24 hores,48 hores,72 hores,B,Comunicació tan aviat com sigui possible i sempre en 24 hores.,Diagnòstic inicial
-8.3-D-009,8,8.3,Quin és el termini general de destrucció de les gravacions policials segons l’article 18?,15 dies,1 mes,3 mesos,6 mesos,C,"Les gravacions es destrueixen, generalment, abans de 3 mesos, amb excepcions.",Diagnòstic inicial
-8.3-D-010,8,8.3,"Quant temps té el responsable per notificar una violació de seguretat a l’autoritat competent, amb caràcter general?",24 hores,48 hores,72 hores,7 dies,C,"La notificació és en 72 hores des del coneixement, amb les excepcions legals.",Diagnòstic inicial
-8.1-T-001,8,8.1,Quina és l’edat mínima per exercir el dret d’accés a la informació pública?,14 anys,16 anys,18 anys,No hi ha edat mínima,B,Dret d’accés a partir dels 16 anys.,Test del tema 8.1
-8.1-T-002,8,8.1,L’exercici del dret d’accés requereix motivar la sol·licitud?,Sempre,Només quan no es té interès directe,No,Només en matèria de seguretat,C,No exigeix motivació ni acreditar interès personal.,Test del tema 8.1
-8.1-T-003,8,8.1,Com s’han d’interpretar els límits del dret d’accés?,De manera extensiva,Restrictivament,Discrecionalment,Sempre en favor de l’Administració,B,Interpretació restrictiva en benefici del dret d’accés.,Test del tema 8.1
-8.1-T-004,8,8.1,Quina majoria parlamentària designa els membres de la GAIP?,Majoria simple,Majoria absoluta,Dos terços,Tres cinquenes parts,D,Designació per majoria de tres cinquenes parts del Parlament.,Test del tema 8.1
-8.1-T-005,8,8.1,"Quant temps té la GAIP per resoldre una reclamació, sense considerar suspensions ni ampliacions?",15 dies,1 mes,2 mesos,3 mesos,C,El termini ordinari de resolució és de 2 mesos.,Test del tema 8.1
-8.2-T-001,8,8.2,Quan acaba el deure de confidencialitat d’un treballador que ha tractat dades personals?,Quan acaba el contracte,Al cap de 5 anys,No acaba pel fet de finalitzar la relació laboral,Quan les dades es publiquen,C,El deure de confidencialitat es manté després de la relació.,Test del tema 8.2
-8.2-T-002,8,8.2,"Per sota de quina edat es requereix, com a regla general, el consentiment dels representants legals?",12 anys,14 anys,16 anys,18 anys,B,El llindar general de consentiment propi és de 14 anys.,Test del tema 8.2
-8.2-T-003,8,8.2,El consentiment de l’afectat és l’única base jurídica per tractar dades personals?,Sí,No,"Sí, si són dades de salut","Sí, en el sector públic",B,"Hi ha altres bases jurídiques, com l’obligació legal o l’interès públic.",Test del tema 8.2
-8.2-T-004,8,8.2,Quin és el termini general màxim de supressió d’imatges de videovigilància?,15 dies,1 mes,3 mesos,6 mesos,B,Conservació general de videovigilància: màxim 1 mes.,Test del tema 8.2
-8.2-T-005,8,8.2,"En el supòsit de videovigilància regulat per la llei, des de quan es compten les 72 hores per posar les imatges a disposició de l’autoritat competent?",Des de la captació,Des de la instal·lació de la càmera,Des del coneixement de l’existència de la gravació,Des de la denúncia,C,Les 72 hores es computen des del coneixement de l’existència de la gravació.,Test del tema 8.2
-8.2-T-006,8,8.2,Qui determina les finalitats i els mitjans del tractament?,L’encarregat,El delegat de protecció de dades,El responsable,L’afectat,C,El responsable determina finalitats i mitjans.,Test del tema 8.2
-8.2-T-007,8,8.2,Què passa si un encarregat utilitza les dades per a les seves pròpies finalitats?,Continua sent encarregat,Es considera responsable del tractament,Queda exempt de responsabilitat,Ha de destruir automàticament totes les dades,B,"En utilitzar dades per a finalitats pròpies, és responsable d’aquell tractament.",Test del tema 8.2
-8.2-T-008,8,8.2,Què significa el bloqueig de dades?,Destruir-les immediatament,Fer-les accessibles públicament,"Reservar-les i impedir-ne el tractament ordinari, amb les excepcions legals",Transferir-les a una altra administració,C,El bloqueig reserva les dades per a responsabilitats legals; no és destrucció.,Test del tema 8.2
-8.3-T-001,8,8.3,"Cada quant s’ha de revisar, com a màxim, la necessitat de conservar, limitar o suprimir dades personals?",Cada any,Cada 2 anys,Cada 3 anys,Cada 5 anys,C,"La revisió s’ha de fer, com a màxim, cada 3 anys.",Test del tema 8.3
-8.3-T-002,8,8.3,"Quin és el termini general màxim de supressió de dades personals, amb les excepcions previstes?",5 anys,10 anys,15 anys,20 anys,D,"El termini general és de 20 anys, amb excepcions.",Test del tema 8.3
-8.3-T-003,8,8.3,L’autorització d’ús de dispositius mòbils de gravació policial té una durada màxima de:,15 dies prorrogables 15 dies,1 mes prorrogable 1 mes,2 mesos improrrogables,6 mesos prorrogables,B,Un mes d’autorització i un altre de possible pròrroga.,Test del tema 8.3
-8.3-T-004,8,8.3,"Quan s’utilitzen urgentment dispositius mòbils de gravació, quin és el termini màxim de comunicació?",12 hores,24 hores,48 hores,72 hores,B,"En cas d’urgència, comunicació dins de 24 hores.",Test del tema 8.3
-8.3-T-005,8,8.3,Una gravació policial capta un possible delicte. Quin és el termini màxim per posar-la a disposició judicial?,24 h des del coneixement,48 h des de la gravació,72 h des de la gravació,72 h des del coneixement,C,"El còmput és des de la gravació, no des del coneixement.",Test del tema 8.3
-8.3-T-006,8,8.3,Quin és el termini general de destrucció de gravacions policials?,1 mes,2 mesos,3 mesos,6 mesos,C,"Tres mesos des de la captació, amb excepcions.",Test del tema 8.3
-8.3-T-007,8,8.3,"Si una sol·licitud d’exercici dels drets no es resol expressament i notifica en un mes, què succeeix?",S’entén estimada,S’entén desestimada,Es prorroga automàticament,S’arxiva sense resolució,B,El silenci és desestimatori.,Test del tema 8.3
-8.3-T-008,8,8.3,"Quantes sol·licituds sobre el mateix supòsit en sis mesos es consideren repetitives, excepte causa legítima?",2,3,4,5,B,"Tres sol·licituds en sis mesos, amb excepció de causa legítima.",Test del tema 8.3
-8.3-T-009,8,8.3,"En quant de temps s’ha de notificar una violació de seguretat a l’autoritat de control, com a regla general?",24 h,48 h,72 h,7 dies,C,La notificació a l’autoritat té un termini de 72 hores des del coneixement.,Test del tema 8.3
-8.3-T-010,8,8.3,"Quan una violació de seguretat comporta indicis d’alt risc per a l’interessat, quan se li ha de comunicar, en general?",En 24 hores,En 72 hores,En 1 mes,Sense dilació indeguda,D,"Comunicació a l’interessat sense dilació indeguda, amb excepcions.",Test del tema 8.3
-8.3-T-011,8,8.3,"Quin termini té l’autoritat per assessorar per escrit en una consulta prèvia, amb caràcter general?",15 dies,1 mes,6 setmanes,3 mesos,C,"L’autoritat té 6 setmanes, prorrogables 1 mes.",Test del tema 8.3
-8.3-T-012,8,8.3,En quin termini s’ha de comunicar la designació o cessament del delegat de protecció de dades?,5 dies,10 dies,15 dies,1 mes,B,"Segons el temari, la comunicació s’ha de fer dins de 10 dies.",Test del tema 8.3
-8.1-G-001,8,8.1,Quina diferència hi ha entre publicitat activa i dret d’accés?,La publicitat activa requereix una petició,La publicitat activa és informació difosa d’ofici,Són exactament el mateix,El dret d’accés només correspon als funcionaris,B,La publicitat activa no exigeix una sol·licitud prèvia.,Consolidació global
-8.1-G-002,8,8.1,A partir de quina edat es pot exercir el dret d’accés a informació pública?,14 anys,16 anys,18 anys,Sense límit d’edat,B,"A partir dels 16 anys, sense necessitat de motivar la petició.",Consolidació global
-8.1-G-003,8,8.1,Quina combinació activa el criteri percentual de transparència per subvencions?,30% i més de 3.000 €,40% i més de 5.000 €,50% i més de 10.000 €,25% i més de 100.000 €,B,Almenys el 40% dels ingressos i una quantitat superior a 5.000 €.,Consolidació global
-8.1-G-004,8,8.1,Com es tracta una petició d’accés amb dades especialment protegides?,Sempre s’autoritza,Es pondera sempre com qualsevol dada ordinària,"Es denega, llevat del consentiment exprés escrit previst",S’autoritza amb una petició verbal,C,El règim de les dades especialment protegides és diferent del de les dades ordinàries.,Consolidació global
-8.1-G-005,8,8.1,Quina és la regla general per a dades merament identificatives vinculades a l’activitat pública?,Denegació automàtica,"Accés, excepte prevalença excepcional d’altres drets",Sempre ponderació com qualsevol dada privada,Consentiment notarial obligatori,B,"L’accés és la regla general, amb excepcions.",Consolidació global
-8.1-G-006,8,8.1,Quin és el termini per presentar una reclamació davant la GAIP?,15 dies,1 mes,2 mesos,3 mesos,B,El termini és d’un mes en els supòsits previstos.,Consolidació global
-8.1-G-007,8,8.1,Com es designen els membres de la GAIP?,"3 a 5 membres, majoria de 3/5 del Parlament","Exactament 3, majoria simple","5 a 7, majoria absoluta","Exactament 5, per decret",A,"Entre tres i cinc membres, per majoria de tres cinquenes parts.",Consolidació global
-8.1-G-008,8,8.1,Quin efecte té una resolució de la GAIP?,Es pot recórrer només davant la mateixa GAIP,No admet cap recurs judicial,Posa fi a la via administrativa i admet impugnació contenciosa administrativa,S’ha de validar sempre al Parlament,C,Les resolucions de la GAIP posen fi a la via administrativa.,Consolidació global
-8.2-G-009,8,8.2,Quina és una finalitat principal de la LO 3/2018?,Regular només la videovigilància policial,Adaptar l’ordenament espanyol al RGPD i garantir drets digitals,Regular exclusivament les investigacions penals,Regular les sancions de trànsit,B,Completa el RGPD i regula la garantia dels drets digitals.,Consolidació global
-8.2-G-010,8,8.2,El deure de confidencialitat finalitza amb la relació laboral?,"Sí, immediatament","Sí, al cap d’un any","No, continua després de finalitzar-la",Només continua per a alts càrrecs,C,Es manté després d’acabar la relació amb el responsable o encarregat.,Consolidació global
-8.2-G-011,8,8.2,Com ha de ser el consentiment?,"Lliure, específic, informat i inequívoc",Tàcit en tots els casos,Sempre verbal i sense informació prèvia,Genèric i irrevocable,A,Cal una manifestació de voluntat amb aquestes quatre característiques.,Consolidació global
-8.2-G-012,8,8.2,Quin és el llindar general del consentiment propi del menor?,12 anys,14 anys,16 anys,18 anys,B,"El llindar legal és de 14 anys, amb les excepcions previstes.",Consolidació global
-8.2-G-013,8,8.2,El mer consentiment sempre permet tractar dades especialment protegides?,"Sí, sense excepcions","Sí, si és verbal","No, hi ha tractaments en què és insuficient","Sí, sempre que es tracti de dades policials",C,Hi ha supòsits en què el consentiment per si sol no aixeca la prohibició.,Consolidació global
-8.2-G-014,8,8.2,Quin és el termini general de supressió d’imatges de videovigilància?,15 dies,1 mes,3 mesos,6 mesos,B,"En el règim general de videovigilància, màxim un mes.",Consolidació global
-8.2-G-015,8,8.2,"En el supòsit previst de conservació per acreditar determinats actes, les 72 hores comencen quan…",Es capten les imatges,Es denuncia el fet,Es coneix l’existència de la gravació,Es presenta una sol·licitud d’accés,C,La norma diu 72 hores des que es té coneixement de l’existència de la gravació.,Consolidació global
-8.2-G-016,8,8.2,Un encarregat utilitza dades per a finalitats pròpies. Quina consideració té?,Continua sent únicament encarregat,Passa a ser responsable d’aquell tractament,Passa a ser delegat de protecció de dades,Queda exempt de les obligacions,B,L’ús de dades per a finalitats pròpies el converteix en responsable del tractament.,Consolidació global
-8.3-G-017,8,8.3,"Cada quant s’ha de revisar, com a màxim, la necessitat de conservar les dades?",Cada any,Cada 2 anys,Cada 3 anys,Cada 5 anys,C,La revisió és com a màxim cada tres anys.,Consolidació global
-8.3-G-018,8,8.3,"Quin és el termini màxim general de supressió de dades, amb les excepcions justificades?",5 anys,10 anys,15 anys,20 anys,D,"El termini general és de vint anys, sense perjudici de les excepcions legals.",Consolidació global
-8.3-G-019,8,8.3,Quina durada màxima té l’autorització d’ús de dispositius mòbils de gravació?,15 dies + 15 dies,1 mes + possible pròrroga d’1 mes,3 mesos improrrogables,6 mesos,B,"Un mes inicial, prorrogable per un altre.",Consolidació global
-8.3-G-020,8,8.3,"En ús urgent de dispositius mòbils policials, quin és el termini màxim de comunicació?",12 hores,24 hores,48 hores,72 hores,B,"S’ha de comunicar tan aviat com sigui possible, sempre dins de 24 hores.",Consolidació global
-8.3-G-021,8,8.3,Una càmera policial grava un possible delicte. Quan s’ha de lliurar la gravació?,72 hores des del coneixement,72 hores des de la gravació,1 mes des de la gravació,24 hores des de la denúncia,B,"El màxim és de 72 hores des de la gravació, sens perjudici de fer-ho com més aviat millor.",Consolidació global
-8.3-G-022,8,8.3,Quin és el termini general de destrucció de gravacions policials?,15 dies,1 mes,3 mesos,1 any,C,"Tres mesos des de la captació, amb les excepcions corresponents.",Consolidació global
-8.3-G-023,8,8.3,Si no es resol i notifica una sol·licitud de drets en el termini general d’un mes…,S’entén estimada,S’entén desestimada,S’amplia automàticament dos mesos,No té conseqüències,B,La llei estableix el silenci desestimatori.,Consolidació global
-8.3-G-024,8,8.3,Com s’ha de comunicar una violació de seguretat?,Autoritat sempre en 24 h; interessat en 72 h,"Autoritat en 72 h, excepte risc improbable; interessat sense dilació indeguda si hi ha alt risc, amb excepcions",Autoritat i interessat sempre en 1 mes,Només s’ha de comunicar si hi ha una denúncia,B,La notificació a l’autoritat i la comunicació a l’interessat tenen condicions i terminis diferents.,Consolidació global
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#102d4d" name="theme-color"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=Outfit:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<meta content="SSPC2026: tests interactius i autocorrecció en grup del Sistema de Seguretat Pública de Catalunya 2026." name="description"/>
+<title>SSPC2026 · Sistema de Seguretat Pública de Catalunya 2026</title>
+<link href="styles.css" rel="stylesheet"/>
+<!-- Còpia de demostració local sense servidor; a GitHub preval preguntes.csv. -->
+<script id="embeddedQuestionBank" type="text/plain">id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio
 </script>
-  <script src="app.js" defer></script>
+<script defer="" src="app.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Salta al contingut</a>
-  <header class="site-header">
-    <div class="header-inner wrap">
-      <button class="logo-btn" type="button" data-nav="home" aria-label="Torna a l'inici">
-        <span class="logo-symbol" aria-hidden="true">I<span class="logo-dot">.</span></span>
-        <span class="brand-text"><strong>INSPECTOR</strong><small>ACADEMY · OPOSICIONS</small></span>
-      </button>
-      <nav class="main-nav" aria-label="Navegació principal">
-        <button class="nav-link active" type="button" data-nav="home">Preparar test</button>
-        <button class="nav-link" type="button" data-nav="bank">Preguntes <span id="navBankCount" class="nav-number">0</span></button>
-        <button class="nav-link" type="button" data-nav="help">Ajuda</button>
-      </nav>
-    </div>
-  </header>
-
-  <main id="main" class="wrap main-content">
-    <div id="notice" class="notice" hidden role="status" aria-live="polite"></div>
-
-    <section id="homeView" class="view" aria-labelledby="homeHeading">
-      <div class="hero">
-        <div>
-          <p class="eyebrow"><span class="eyebrow-line"></span> LA TEVA PREPARACIÓ COMENÇA AQUÍ</p>
-          <h1 id="homeHeading">Fes del repàs<br><em>el teu avantatge.</em></h1>
-          <p class="hero-subtitle">La teva acadèmia de tests. Estudia amb intenció, entrena amb preguntes reals del teu material i converteix cada error en un nou encert.</p>
-        </div>
-        <div class="hero-decoration" aria-hidden="true">
-          <span class="hero-ring ring-one"></span><span class="hero-ring ring-two"></span>
-          <span class="hero-glyph">IN<span>·</span></span>
-          <span class="hero-tag">PREPARACIÓ AMB CRITERI</span>
-        </div>
-      </div>
-
-      <div id="demoBanner" class="demo-banner" hidden>
-        <span class="demo-icon" aria-hidden="true">ⓘ</span>
-        <p><strong>Banc de demostració.</strong> Les preguntes actuals només serveixen per provar el programa; no són preguntes de l'oposició. Pots substituir-les a <button type="button" class="inline-action" data-nav="bank">Preguntes</button>.</p>
-      </div>
-
-      <div id="resumeBanner" class="resume-banner" hidden>
-        <div><strong>Tens un test a mitges</strong><p id="resumeDescription">Pots continuar-lo on el vas deixar.</p></div>
-        <div class="resume-actions"><button id="resumeBtn" class="btn btn-primary" type="button">Continuar test →</button><button id="discardBtn" class="btn btn-outline" type="button">Descartar</button></div>
-      </div>
-
-      <div class="stat-grid" aria-label="Estadístiques del banc">
-        <div class="stat-card"><span class="stat-label">Preguntes disponibles</span><strong id="statQuestions">—</strong><span class="stat-meta">al banc actual</span></div>
-        <div class="stat-card"><span class="stat-label">Temes carregats</span><strong id="statTopics">—</strong><span class="stat-meta">dels 8 blocs</span></div>
-        <div class="stat-card"><span class="stat-label">Tests finalitzats</span><strong id="statTests">—</strong><span class="stat-meta">en aquest dispositiu</span></div>
-        <div class="stat-card accent-stat"><span class="stat-label">Preguntes per repassar</span><strong id="statErrors">—</strong><span class="stat-meta">fallades en tests anteriors</span></div>
-      </div>
-
-      <div class="workspace-grid">
-        <section class="panel setup-panel" aria-labelledby="setupHeading">
-          <div class="panel-heading"><div><p class="section-kicker">NOU TEST</p><h2 id="setupHeading">Dissenya el teu test</h2></div><span class="panel-chip">PAS 01 / 02</span></div>
-          <fieldset class="fieldset-reset">
-            <legend class="field-title">1. Què vols estudiar?</legend>
-            <div class="scope-options" id="scopeOptions">
-              <label class="scope-option"><input type="radio" name="scope" value="all" checked><span class="scope-icon" aria-hidden="true">◎</span><span class="scope-title">Tot el temari</span><span class="scope-caption">Tots els blocs</span></label>
-              <label class="scope-option"><input type="radio" name="scope" value="block"><span class="scope-icon" aria-hidden="true">▦</span><span class="scope-title">Un bloc</span><span class="scope-caption">Tots els seus temes</span></label>
-              <label class="scope-option"><input type="radio" name="scope" value="topic"><span class="scope-icon" aria-hidden="true">▤</span><span class="scope-title">Un tema</span><span class="scope-caption">Màxima precisió</span></label>
-            </div>
-          </fieldset>
-          <div id="filterFields" class="filter-fields" hidden>
-            <div class="field" id="blockField"><label for="blockSelect">Bloc</label><select id="blockSelect"></select></div>
-            <div class="field" id="topicField" hidden><label for="topicSelect">Tema</label><select id="topicSelect"></select></div>
-          </div>
-          <fieldset class="fieldset-reset amount-fieldset">
-            <legend class="field-title">2. Nombre de preguntes</legend>
-            <div class="amount-options">
-              <label><input type="radio" name="amount" value="10" checked><span>10<small>Ràpid</small></span></label>
-              <label><input type="radio" name="amount" value="30"><span>30<small>Estàndard</small></span></label>
-              <label><input type="radio" name="amount" value="50"><span>50<small>Intensiu</small></span></label>
-            </div>
-          </fieldset>
-          <div class="setup-foot">
-            <p id="availableHint" class="available-hint" aria-live="polite">—</p>
-            <button id="startBtn" class="btn btn-primary btn-large" type="button">Comença a practicar <span aria-hidden="true">↗</span></button>
-          </div>
-        </section>
-
-        <aside class="side-stack">
-          <section class="panel side-panel" aria-labelledby="repeatHeading">
-            <div class="side-heading"><span class="circle-icon" aria-hidden="true">↻</span><div><p class="section-kicker">PRÀCTICA INTEL·LIGENT</p><h2 id="repeatHeading">Repassa els errors</h2></div></div>
-            <p>Recupera les preguntes que has fallat en tests anteriors i treballa-hi fins que les encertis.</p>
-            <button id="repeatSavedBtn" class="btn btn-secondary" type="button">Practicar errors pendents <span id="pendingCount">(0)</span></button>
-          </section>
-          <section class="panel history-panel" aria-labelledby="historyHeading">
-            <div class="side-heading history-heading"><div><p class="section-kicker">EVOLUCIÓ</p><h2 id="historyHeading">El teu progrés</h2></div></div>
-            <div id="historyList" class="history-list"><p class="muted">Encara no has finalitzat cap test.</p></div>
-          </section>
-        </aside>
-      </div>
-    </section>
-
-    <section id="quizView" class="view" hidden aria-labelledby="quizHeading">
-      <div class="test-topbar"><button type="button" class="back-link" id="quitTestBtn">← Abandonar test</button><span id="quizScope" class="test-badge">Tot el temari</span><span id="testTime" class="time-chip">00:00</span></div>
-      <div class="quiz-layout">
-        <section class="panel question-panel" aria-labelledby="quizHeading">
-          <div class="quiz-progress-info"><span id="questionCounter" class="section-kicker">PREGUNTA 1 DE 10</span><span id="answeredCounter" class="answered-counter">0 respostes</span></div>
-          <div class="progress-track" role="progressbar" aria-label="Preguntes respostes" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div id="progressFill" class="progress-fill"></div></div>
-          <p id="questionMeta" class="question-meta"></p>
-          <h1 id="quizHeading" class="question-title"></h1>
-          <div id="answerOptions" class="answers" role="radiogroup" aria-label="Opcions de resposta"></div>
-          <div class="question-actions"><button id="prevBtn" class="btn btn-outline" type="button">← Anterior</button><button id="nextBtn" class="btn btn-primary" type="button">Següent →</button><button id="finishBtn" class="btn btn-primary" type="button" hidden>Finalitza i corregeix ✓</button></div>
-        </section>
-        <aside class="panel quiz-aside"><div class="panel-heading small"><div><p class="section-kicker">NAVEGACIÓ</p><h2>Preguntes</h2></div></div><p class="muted small-text">Toca un número per canviar de pregunta.</p><div id="questionGrid" class="question-grid"></div><div class="legend"><span><i class="legend-dot legend-answered"></i> Resposta marcada</span><span><i class="legend-dot legend-current"></i> Actual</span></div><button id="finishAsideBtn" class="btn btn-secondary full-width" type="button">Finalitza el test</button></aside>
-      </div>
-    </section>
-
-    <section id="resultView" class="view" hidden aria-labelledby="resultsHeading">
-      <div class="results-intro"><div><p class="section-kicker">TEST FINALITZAT</p><h1 id="resultsHeading">Els teus resultats</h1><p id="resultScope" class="muted"></p></div><button class="btn btn-outline" data-nav="home" type="button">← Preparar un altre test</button></div>
-      <div class="panel result-card"><div class="score-circle"><span id="resultPercent">—</span><small>D'ENCERTS</small></div><div class="score-content"><h2 id="scoreMessage">Test completat</h2><p id="scoreSentence">—</p><div class="score-breakdown"><span class="score-good"><strong id="scoreRight">0</strong> encertades</span><span class="score-bad"><strong id="scoreWrong">0</strong> errònies</span><span class="score-empty"><strong id="scoreBlank">0</strong> sense respondre</span></div></div></div>
-      <div class="result-toolbar"><div><p class="section-kicker">REVISIÓ D'APRENENTATGE</p><h2>Correcció de preguntes</h2><p class="muted" id="reviewHint">Les errònies i les no respostes apareixen primer.</p></div><div class="result-buttons"><button id="repeatWrongBtn" class="btn btn-primary" type="button">Repetir les fallades ↻</button><button id="toggleAllBtn" class="btn btn-outline" type="button">Veure totes</button></div></div>
-      <div id="reviewList" class="review-list"></div>
-    </section>
-
-    <section id="bankView" class="view" hidden aria-labelledby="bankHeading">
-      <div class="page-intro"><p class="section-kicker">ADMINISTRACIÓ LOCAL</p><h1 id="bankHeading">Banc de preguntes</h1><p>Gestiona les preguntes i importa fitxers JSON o CSV. No cal cap servidor ni base de dades de pagament.</p></div>
-      <div class="bank-actions panel">
-        <div class="bank-summary"><strong id="bankCount">0</strong><span>preguntes disponibles</span><span class="bank-divider"></span><strong id="bankTopicCount">0</strong><span>temes</span></div>
-        <div class="bank-toolbar"><button id="addQuestionBtn" class="btn btn-primary" type="button">+ Nova pregunta</button><button id="importBtn" class="btn btn-secondary" type="button">↑ Importar fitxer</button><button id="exportBtn" class="btn btn-outline" type="button">↓ Exportar CSV</button></div>
-        <input id="importFile" type="file" accept=".json,.csv,application/json,text/csv" hidden aria-label="Fitxer de preguntes">
-        <div id="importOptions" class="import-options" hidden><label for="importMode">Com s'han d'importar les preguntes?</label><select id="importMode"><option value="replace">Substituir tot el banc actual</option><option value="merge">Afegir-les / actualitzar les que tinguin el mateix ID</option></select><button id="chooseImportBtn" class="btn btn-primary" type="button">Seleccionar fitxer .json o .csv</button><button id="cancelImportBtn" class="btn btn-plain" type="button">Cancel·lar</button></div>
-      </div>
-      <div id="localWarning" class="local-warning"><strong>Important:</strong> Les edicions fetes aquí es desen només en aquest navegador. Per compartir les mateixes preguntes entre PC i mòbil, exporta el CSV i puja'l al repositori de GitHub com a <code>preguntes.csv</code>.</div>
-      <form id="questionForm" class="panel editor-panel" hidden novalidate>
-        <div class="panel-heading"><div><p class="section-kicker">EDITOR</p><h2 id="editorHeading">Afegir pregunta</h2></div><button id="closeEditorBtn" type="button" class="icon-close" aria-label="Tancar editor">×</button></div>
-        <div class="editor-grid"><div class="field"><label for="editId">Identificador únic *</label><input id="editId" maxlength="70" required placeholder="p. ex. 7.3-001"></div><div class="field"><label for="editBloc">Bloc *</label><select id="editBloc" required><option value="1">Bloc 1</option><option value="2">Bloc 2</option><option value="3">Bloc 3</option><option value="4">Bloc 4</option><option value="5">Bloc 5</option><option value="6">Bloc 6</option><option value="7">Bloc 7</option><option value="8">Bloc 8</option></select></div><div class="field"><label for="editTema">Tema *</label><input id="editTema" maxlength="100" required placeholder="p. ex. 7.3"></div><div class="field"><label for="editCorrecta">Resposta correcta *</label><select id="editCorrecta"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div></div>
-        <div class="field"><label for="editEnunciat">Enunciat *</label><textarea id="editEnunciat" rows="3" maxlength="3000" required placeholder="Escriu aquí la pregunta..."></textarea></div>
-        <div class="editor-grid options-grid"><div class="field"><label for="editA">Opció A *</label><textarea id="editA" rows="2" required></textarea></div><div class="field"><label for="editB">Opció B *</label><textarea id="editB" rows="2" required></textarea></div><div class="field"><label for="editC">Opció C *</label><textarea id="editC" rows="2" required></textarea></div><div class="field"><label for="editD">Opció D *</label><textarea id="editD" rows="2" required></textarea></div></div>
-        <div class="field"><label for="editExplicacio">Explicació (opcional)</label><textarea id="editExplicacio" rows="2" placeholder="Per què és aquesta la resposta correcta?"></textarea></div>
-        <p class="form-error" id="editError" role="alert" hidden></p><div class="editor-actions"><button type="submit" class="btn btn-primary">Desar pregunta</button><button id="cancelEditBtn" type="button" class="btn btn-outline">Cancel·lar</button></div>
-      </form>
-      <div class="panel question-list-panel"><div class="list-toolbar"><div class="field search-field"><label for="bankSearch">Cerca al banc</label><input id="bankSearch" type="search" placeholder="Text de la pregunta, bloc o tema..."></div><div class="list-tools"><button id="downloadTemplateBtn" class="text-action" type="button">Baixar plantilla CSV ↘</button><button id="removeDemoBtn" class="text-action danger-text" type="button" hidden>Eliminar exemples demo</button><button id="resetBankBtn" class="text-action danger-text" type="button">Restaurar CSV de GitHub</button></div></div><div id="questionList" class="bank-question-list"></div><p id="bankListFoot" class="list-foot"></p></div>
-    </section>
-
-    <section id="helpView" class="view" hidden aria-labelledby="helpHeading">
-      <div class="page-intro"><p class="section-kicker">GUIA D'ÚS</p><h1 id="helpHeading">Com funciona?</h1><p>Un programa HTML + JavaScript estàtic. Funciona a GitHub Pages, sense registre ni serveis externs.</p></div>
-      <div class="help-grid"><div class="panel help-card"><span class="help-number">01</span><h2>Carrega les preguntes</h2><p>Fes servir <strong>Preguntes → Importar fitxer</strong> per carregar un JSON o CSV, o afegeix preguntes amb l'editor incorporat.</p></div><div class="panel help-card"><span class="help-number">02</span><h2>Tria el teu temari</h2><p>Selecciona tot el temari, un bloc complet o un tema concret. Tria entre <strong>10, 30 o 50</strong> preguntes (sense repeticions).</p></div><div class="panel help-card"><span class="help-number">03</span><h2>Respon i revisa</h2><p>Passa d'una pregunta a una altra, deixa'n en blanc si vols i, en finalitzar, revisa errors, encerts i explicacions.</p></div><div class="panel help-card"><span class="help-number">04</span><h2>Guarda el banc a GitHub</h2><p>Exporta el banc en CSV i substitueix <code>preguntes.csv</code> al teu repositori. Es carregarà automàticament a PC i mòbil.</p></div></div>
-      <section class="panel help-details"><h2>Format de les dades</h2>
-        <p>El programa carrega <strong>automàticament <code>preguntes.csv</code></strong> des de GitHub Pages. No cal convertir-lo a JSON.</p>
-        <p>La primera fila ha de ser aquesta capçalera, en aquest ordre:</p>
-        <pre><code>id,bloc,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio,origen</code></pre>
-        <p>Una pregunta ocupa una fila. <code>correcta</code> és una lletra A/B/C/D. Les columnes <code>explicacio</code> i <code>origen</code> són opcionals. CSV en UTF-8; els textos amb comes, cometes o salts de línia s'exporten correctament entre cometes. També pots importar fitxers JSON antics.</p>
-        <h3>Actualitzar preguntes a GitHub</h3><p>Edita <code>preguntes.csv</code> amb LibreOffice o Excel, desa'l en CSV UTF-8 i substitueix-lo a GitHub. <strong>No cal tocar index.html ni app.js.</strong> Si tens canvis locals, exporta'ls abans de prémer «Restaurar CSV de GitHub».</p>
-        <h3>Dades i privacitat</h3><p>Les respostes i els resultats es desen al navegador. GitHub Pages no pot escriure automàticament al repositori: si edites preguntes dins del programa, prem <strong>Exportar CSV</strong> i penja'l a GitHub manualment. Els resultats de PC i mòbil no se sincronitzen.</p>
-        <h3>Correcció</h3><p>Una resposta correcta suma un encert; una incorrecta, un error; les no contestades es compten a part. El percentatge és <strong>encerts / preguntes totals × 100</strong>, sense penalització addicional.</p>
-      </section>
-    </section>
-  </main>
-  <footer class="site-footer wrap"><span>INSPECTOR · Tests d'estudi</span><span>Dissenyat per estudiar millor · Dades al teu dispositiu</span></footer>
+<a class="skip-link" href="#main">Salta al contingut</a>
+<header class="site-header">
+<div class="header-inner wrap">
+<button aria-label="Torna a l'inici" class="logo-btn" data-nav="home" type="button">
+<span aria-hidden="true" class="logo-symbol">S<span class="logo-dot">·</span></span>
+<span class="brand-text"><strong>SSPC2026</strong><small>VERSIÓ 1.1</small></span>
+</button>
+<nav aria-label="Navegació principal" class="main-nav">
+<button class="nav-link active" data-nav="home" type="button">Tests</button>
+<button class="nav-link" data-nav="bank" type="button">Preguntes <span class="nav-number" id="navBankCount">0</span></button>
+<button class="nav-link" data-nav="help" type="button">Ajuda</button>
+</nav>
+</div>
+</header>
+<main class="wrap main-content" id="main">
+<div aria-live="polite" class="notice" hidden="" id="notice" role="status"></div>
+<section aria-labelledby="homeHeading" class="view" id="homeView">
+<div class="hero"><div class="hero-copy"><p class="eyebrow">SSPC2026  /  V1.1</p><h1 id="homeHeading">Sistema de Seguretat<br/>Pública de Catalunya <em>2026</em></h1></div><div aria-hidden="true" class="hero-decoration"><span class="hero-orbit orbit-one"></span><span class="hero-orbit orbit-two"></span><span class="hero-mark">SSPC</span></div></div>
+<div class="demo-banner" hidden="" id="demoBanner">
+<span aria-hidden="true" class="demo-icon">ⓘ</span>
+<p>Aquest banc conté preguntes de demostració. Substitueix-les per les del curs des de l’apartat Preguntes.</p>
+</div>
+<div class="resume-banner" hidden="" id="resumeBanner">
+<div><strong>Tens un test a mitges</strong><p id="resumeDescription">Pots continuar-lo on el vas deixar.</p></div>
+<div class="resume-actions"><button class="btn btn-primary" id="resumeBtn" type="button">Continuar test →</button><button class="btn btn-outline" id="discardBtn" type="button">Descartar</button></div>
+</div>
+<div aria-label="Estadístiques del banc" class="stat-grid">
+<div class="stat-card"><span class="stat-label">Preguntes disponibles</span><strong id="statQuestions">—</strong><span class="stat-meta">al banc de preguntes</span></div>
+<div class="stat-card"><span class="stat-label">Temes</span><strong id="statTopics">—</strong><span class="stat-meta">disponibles</span></div>
+<div class="stat-card suppressed-stat"><span class="stat-label">Tests finalitzats</span><strong id="statTests">—</strong><span class="stat-meta">en aquest dispositiu</span></div>
+<div class="stat-card accent-stat suppressed-stat"><span class="stat-label">Preguntes per repassar</span><strong id="statErrors">—</strong><span class="stat-meta">fallades en tests anteriors</span></div>
+</div>
+<div class="workspace-grid">
+<section aria-labelledby="setupHeading" class="panel setup-panel">
+<div class="panel-heading"><div><p class="section-kicker">CONFIGURACIÓ</p><h2 id="setupHeading">Prepara el test</h2></div></div>
+<fieldset class="fieldset-reset">
+<legend class="field-title">Quin contingut vols practicar?</legend>
+<div class="scope-options" id="scopeOptions">
+<label class="scope-option"><input checked="" name="scope" type="radio" value="all"/><span aria-hidden="true" class="scope-icon">◎</span><span class="scope-title">Tot el temari</span></label>
+<label class="scope-option"><input name="scope" type="radio" value="topic"/><span aria-hidden="true" class="scope-icon">▤</span><span class="scope-title">Una lliçó</span></label>
+</div>
+</fieldset>
+<div class="filter-fields" hidden="" id="filterFields">
+<div class="field" id="topicField"><label for="topicSelect">Lliçó</label><select id="topicSelect"></select></div>
+</div>
+<fieldset class="fieldset-reset amount-fieldset">
+<legend class="field-title">Quantes preguntes?</legend>
+<div class="amount-options">
+<label><input checked="" name="amount" type="radio" value="10"/><span>10<small>Ràpid</small></span></label>
+<label><input name="amount" type="radio" value="30"/><span>30<small>Estàndard</small></span></label>
+<label><input name="amount" type="radio" value="50"/><span>50<small>Intensiu</small></span></label>
+</div>
+</fieldset>
+<div class="setup-foot">
+<p aria-live="polite" class="available-hint" id="availableHint">—</p>
+<button class="btn btn-primary btn-large" id="startBtn" type="button">Començar el test <span aria-hidden="true">→</span></button>
+</div>
+</section>
+<aside class="side-stack">
+<section aria-labelledby="repeatHeading" class="panel side-panel">
+<div class="side-heading"><span aria-hidden="true" class="circle-icon">↻</span><div><h2 id="repeatHeading">Repassar errors</h2></div></div>
+<p>Torna a practicar les preguntes fallades.</p>
+<button class="btn btn-secondary" id="repeatSavedBtn" type="button">Practicar errors <span id="pendingCount">(0)</span></button>
+</section>
+<details class="panel history-panel"><summary>Historial de tests</summary><div class="history-list" id="historyList"><p class="muted">Encara no has finalitzat cap test.</p></div></details>
+</aside>
+</div>
+</section>
+<section aria-labelledby="quizHeading" class="view" hidden="" id="quizView">
+<div class="test-topbar"><button class="back-link" id="quitTestBtn" type="button">← Abandonar test</button><span class="test-badge" id="quizScope">Tot el temari</span><button class="btn btn-outline projection-button" id="projectionBtn" type="button" aria-pressed="false" title="Amplia les preguntes i les opcions per projectar a l'aula">▣ Mode projector</button><span class="time-chip" id="testTime">00:00</span></div>
+<div class="quiz-layout">
+<section aria-labelledby="quizHeading" class="panel question-panel">
+<div class="quiz-progress-info"><span class="section-kicker" id="questionCounter">PREGUNTA 1 DE 10</span><span class="answered-counter" id="answeredCounter">0 respostes</span></div>
+<div aria-label="Preguntes respostes" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-track" id="progressTrack" role="progressbar"><div class="progress-fill" id="progressFill"></div></div>
+<p class="question-meta" id="questionMeta"></p>
+<h1 class="question-title" id="quizHeading"></h1>
+<div aria-label="Opcions de resposta" class="answers" id="answerOptions" role="radiogroup"></div>
+<div class="question-actions"><button class="btn btn-outline" id="prevBtn" type="button">← Anterior</button><button class="btn btn-primary" id="nextBtn" type="button">Següent →</button><button class="btn btn-primary" hidden="" id="finishBtn" type="button">Finalitza i corregeix ✓</button></div>
+</section>
+<aside class="panel quiz-aside"><div class="panel-heading small"><div><p class="section-kicker">NAVEGACIÓ</p><h2>Preguntes</h2></div></div><p class="muted small-text">Toca un número per canviar de pregunta.</p><div class="question-grid" id="questionGrid"></div><div class="legend"><span><i class="legend-dot legend-answered"></i> Resposta marcada</span><span><i class="legend-dot legend-current"></i> Actual</span></div><button class="btn btn-secondary full-width" id="finishAsideBtn" type="button">Finalitza el test</button></aside>
+</div>
+</section>
+<section aria-labelledby="resultsHeading" class="view" hidden="" id="resultView">
+<div class="results-intro"><div><p class="section-kicker">TEST FINALITZAT</p><h1 id="resultsHeading">Els teus resultats</h1><p class="muted" id="resultScope"></p></div><button class="btn btn-outline" data-nav="home" type="button">← Preparar un altre test</button></div>
+<div class="panel result-card"><div class="score-circle"><span id="resultPercent">—</span><small>D'ENCERTS</small></div><div class="score-content"><h2 id="scoreMessage">Test completat</h2><p id="scoreSentence">—</p><div class="score-breakdown"><span class="score-good"><strong id="scoreRight">0</strong> encertades</span><span class="score-bad"><strong id="scoreWrong">0</strong> errònies</span><span class="score-empty"><strong id="scoreBlank">0</strong> sense respondre</span></div></div></div>
+<section aria-labelledby="keyHeading" class="panel answer-key-panel" id="answerKeyPanel"><div class="answer-key-header"><div><p class="section-kicker">AUTOCORRECCIÓ A L'AULA</p><h2 id="keyHeading">Solucionari del test</h2><p>En l'ordre que s'han projectat les preguntes, amb les lletres que s'han vist a la pantalla.</p></div><div class="answer-key-actions"><button class="btn btn-primary" id="projectKeyBtn" type="button" aria-pressed="false">▣ Ampliar solucionari</button><button class="btn btn-outline" id="copyKeyBtn" type="button">Copiar solucions</button><button class="btn btn-secondary" id="printKeyBtn" type="button">Imprimir</button></div></div><div aria-label="Respostes correctes per ordre de pregunta" class="answer-key-grid" id="answerKeyGrid"></div><p class="answer-key-note">Aquestes són les respostes correctes, no les que ha marcat l'alumne que ha fet el test.</p></section>
+<div class="result-toolbar"><div><p class="section-kicker">REVISIÓ D'APRENENTATGE</p><h2>Correcció de preguntes</h2><p class="muted" id="reviewHint">Les errònies i les no respostes apareixen primer.</p></div><div class="result-buttons"><button class="btn btn-primary" id="repeatWrongBtn" type="button">Repetir les fallades ↻</button><button class="btn btn-outline" id="toggleAllBtn" type="button">Veure totes</button></div></div>
+<div class="review-list" id="reviewList"></div>
+</section>
+<section aria-labelledby="bankHeading" class="view" hidden="" id="bankView">
+<div class="page-intro"><p class="section-kicker">BANC CSV</p><h1 id="bankHeading">Preguntes</h1><p>Importa o administra el banc CSV.</p></div>
+<div class="bank-actions panel">
+<div class="bank-summary"><strong id="bankCount">0</strong><span>preguntes disponibles</span><span class="bank-divider"></span><strong id="bankTopicCount">0</strong><span>temes</span></div>
+<div class="bank-toolbar"><button class="btn btn-primary" id="addQuestionBtn" type="button">+ Nova pregunta</button><button class="btn btn-secondary" id="importBtn" type="button">↑ Importar fitxer</button><button class="btn btn-outline" id="exportBtn" type="button">↓ Exportar CSV</button></div>
+<input accept=".csv,text/csv" aria-label="Fitxer de preguntes" hidden="" id="importFile" type="file"/>
+<div class="import-options" hidden="" id="importOptions"><label for="importMode">Com s'han d'importar les preguntes?</label><select id="importMode"><option value="replace">Substituir tot el banc actual</option><option value="merge">Afegir-les / actualitzar les que tinguin el mateix ID</option></select><button class="btn btn-primary" id="chooseImportBtn" type="button">Seleccionar fitxer .csv</button><button class="btn btn-plain" id="cancelImportBtn" type="button">Cancel·lar</button></div>
+</div>
+<div class="local-warning" id="localWarning">Els canvis fets aquí es guarden en aquest navegador. Per publicar-los, exporta el CSV i substitueix preguntes.csv a GitHub.</div>
+<form class="panel editor-panel" hidden="" id="questionForm" novalidate="">
+<div class="panel-heading"><div><p class="section-kicker">EDITOR</p><h2 id="editorHeading">Afegir pregunta</h2></div><button aria-label="Tancar editor" class="icon-close" id="closeEditorBtn" type="button">×</button></div>
+<div class="editor-grid"><div class="field"><label for="editId">Identificador únic *</label><input id="editId" maxlength="70" placeholder="p. ex. 1.2-001" required=""/></div><div class="field"><label for="editTema">Tema *</label><input id="editTema" maxlength="100" placeholder="p. ex. 1.2" required=""/></div><div class="field"><label for="editCorrecta">Resposta correcta *</label><select id="editCorrecta"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div></div>
+<div class="field"><label for="editEnunciat">Enunciat *</label><textarea id="editEnunciat" maxlength="3000" placeholder="Escriu aquí la pregunta..." required="" rows="3"></textarea></div>
+<div class="editor-grid options-grid"><div class="field"><label for="editA">Opció A *</label><textarea id="editA" required="" rows="2"></textarea></div><div class="field"><label for="editB">Opció B *</label><textarea id="editB" required="" rows="2"></textarea></div><div class="field"><label for="editC">Opció C *</label><textarea id="editC" required="" rows="2"></textarea></div><div class="field"><label for="editD">Opció D *</label><textarea id="editD" required="" rows="2"></textarea></div></div>
+<div class="field"><label for="editExplicacio">Explicació (opcional)</label><textarea id="editExplicacio" placeholder="Per què és aquesta la resposta correcta?" rows="2"></textarea></div>
+<p class="form-error" hidden="" id="editError" role="alert"></p><div class="editor-actions"><button class="btn btn-primary" type="submit">Desar pregunta</button><button class="btn btn-outline" id="cancelEditBtn" type="button">Cancel·lar</button></div>
+</form>
+<div class="panel question-list-panel"><div class="list-toolbar"><div class="field search-field"><label for="bankSearch">Cerca al banc</label><input id="bankSearch" placeholder="Text de la pregunta o lliçó..." type="search"/></div><div class="list-tools"><button class="text-action" id="downloadTemplateBtn" type="button">Baixar plantilla CSV ↘</button><button class="text-action danger-text" hidden="" id="removeDemoBtn" type="button">Eliminar exemples demo</button><button class="text-action danger-text" id="resetBankBtn" type="button">Restaurar CSV de GitHub</button></div></div><div class="bank-question-list" id="questionList"></div><p class="list-foot" id="bankListFoot"></p></div>
+</section>
+<section aria-labelledby="helpHeading" class="view" hidden="" id="helpView">
+<div class="page-intro"><p class="section-kicker">INSTRUCCIONS</p><h1 id="helpHeading">Ajuda</h1><p>Funcionament de SSPC2026.</p></div>
+<div class="help-grid"><div class="panel help-card"><span class="help-number">01</span><h2>Carrega les preguntes</h2><p>Importa el fitxer CSV o afegeix preguntes a l’editor.</p></div><div class="panel help-card"><span class="help-number">02</span><h2>Tria el teu temari</h2><p>Selecciona tot el temari o una lliçó concreta. Tria entre <strong>10, 30 o 50</strong> preguntes (sense repeticions).</p></div><div class="panel help-card"><span class="help-number">03</span><h2>Respon i revisa</h2><p>Un alumne marca les respostes a l’ordinador mentre la resta anota les seves. Al final apareix una graella de solucions numerades per autocorregir-se. Des de casa cada alumne pot practicar individualment.</p></div><div class="panel help-card"><span class="help-number">04</span><h2>Guarda el banc a GitHub</h2><p>Exporta el banc en CSV i substitueix <code>preguntes.csv</code> al teu repositori. Es carregarà automàticament a PC i mòbil.</p></div></div>
+<section class="panel help-details"><h2>Format de les dades</h2>
+<p>El programa carrega <strong>automàticament <code>preguntes.csv</code></strong> des de GitHub Pages. No cal convertir-lo a JSON.</p>
+<p>La primera fila ha de ser aquesta capçalera, en aquest ordre:</p>
+<pre><code>id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio</code></pre>
+<p>Una pregunta ocupa una fila. El camp <code>tema</code> identifica la lliçó (per exemple <code>1.2</code>); el camp <code>bloc</code> ja no existeix. <code>correcta</code> és una lletra A/B/C/D. La columna <code>explicacio</code> és opcional. CSV en UTF-8; les comes, les cometes i els salts de línia es tracten correctament. Els CSV antics que tinguin <code>bloc</code> es poden importar: aquesta columna s’ignora i s’elimina en exportar.</p>
+<h3>Actualitzar preguntes a GitHub</h3><p>Edita <code>preguntes.csv</code> amb LibreOffice o Excel, desa'l en CSV UTF-8 i substitueix-lo a GitHub. <strong>No cal tocar index.html ni app.js.</strong> Si tens canvis locals, exporta'ls abans de prémer «Restaurar CSV de GitHub».</p>
+<h3>Dades i privacitat</h3><p>Les respostes i els resultats es desen al navegador de cada dispositiu. GitHub Pages no pot escriure automàticament al repositori: si edites preguntes dins del programa, prem <strong>Exportar CSV</strong> i penja'l a GitHub manualment. Els resultats de PC i mòbil no se sincronitzen.</p>
+<h3>Correcció</h3><p>Una resposta correcta suma un encert; una incorrecta, un error; les no contestades es compten a part. El percentatge és <strong>encerts / preguntes totals × 100</strong>, sense penalització addicional.</p>
+</section>
+</section>
+</main>
+<footer class="site-footer wrap">SSPC2026 · v1.1</footer>
 </body>
 </html>

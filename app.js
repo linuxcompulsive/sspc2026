@@ -1,17 +1,17 @@
-/* INSPECTOR · Testos — 100% HTML, CSS i JavaScript, sense dependències */
+/* SSPC2026 v1.1 · Tests interactius — HTML, CSS i JavaScript */
 (() => {
   'use strict';
 
   const KEYS = {
-    bank: 'insp_tests_bank_v1', history: 'insp_tests_history_v1', missed: 'insp_tests_missed_v1',
-    active: 'insp_tests_active_v1', result: 'insp_tests_result_v1',
-    custom: 'insp_tests_csv_custom_v2'
+    bank: 'sspc2026_bank_v2', history: 'sspc2026_history_v2', missed: 'sspc2026_missed_v2',
+    active: 'sspc2026_active_v2', result: 'sspc2026_result_v2',
+    custom: 'sspc2026_csv_custom_v3'
   };
   const LETTERS = ['A', 'B', 'C', 'D'];
   const MAX_HISTORY = 100;
   const state = {
     bank: [], history: [], missed: [], active: null, result: null,
-    view: 'home', scope: 'all', amount: 10, showAllReview: false, editingId: null,
+    view: 'home', scope: 'all', amount: 10, showAllReview: false, editingId: null, projector: false, projectKey: false,
     defaultBank: [], fileLoaded: false
   };
   const $ = (id) => document.getElementById(id);
@@ -26,7 +26,7 @@
   const compareTopics = (a, b) => a.localeCompare(b, 'ca', {numeric:true, sensitivity:'base'});
   const shuffle = (input) => { const arr = [...input]; for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; };
   const byId = (id) => state.bank.find((q) => q.id === id);
-  const questionLabel = (q) => `Bloc ${q.bloc} · Tema ${q.tema}${q.origen ? ` · ${q.origen}` : ''}`;
+  const questionLabel = (q) => `Lliçó ${q.tema}${q.origen ? ` · ${q.origen}` : ''}`;
 
   function showNotice(message, kind='success') {
     const notice = $('notice'); notice.textContent = message; notice.dataset.kind = kind; notice.hidden = false;
@@ -35,7 +35,6 @@
   function normalizeQuestion(q, index) {
     if (!q || typeof q !== 'object' || Array.isArray(q)) throw Error(`Pregunta ${index + 1}: el format no és un objecte.`);
     const id = String(q.id ?? '').trim();
-    const bloc = Number(q.bloc);
     const tema = String(q.tema ?? '').trim();
     const enunciat = String(q.enunciat ?? '').trim();
     const opcions = Array.isArray(q.opcions) ? q.opcions.map((x) => String(x ?? '').trim()) :
@@ -43,11 +42,10 @@
     const correcta = String(q.correcta ?? '').trim().toUpperCase();
     const explicacio = String(q.explicacio ?? '').trim();
     if (!id) throw Error(`Pregunta ${index + 1}: falta l'ID.`);
-    if (!Number.isInteger(bloc) || bloc < 1 || bloc > 8) throw Error(`Pregunta ${id}: el bloc ha de ser de l'1 al 8.`);
     if (!tema || !enunciat) throw Error(`Pregunta ${id}: falta el tema o l'enunciat.`);
     if (opcions.length !== 4 || opcions.some((x) => !x)) throw Error(`Pregunta ${id}: calen exactament quatre opcions no buides.`);
     if (!LETTERS.includes(correcta)) throw Error(`Pregunta ${id}: la resposta correcta ha de ser A, B, C o D.`);
-    return {id, bloc, tema, enunciat, opcions, correcta, explicacio, ...(String(q.origen ?? '').trim() ? {origen:String(q.origen).trim()} : {}), ...(q.demo === true ? {demo:true} : {})};
+    return {id, tema, enunciat, opcions, correcta, explicacio, ...(String(q.origen ?? '').trim() ? {origen:String(q.origen).trim()} : {}), ...(q.demo === true ? {demo:true} : {})};
   }
   function validateBank(items) {
     if (!Array.isArray(items)) throw Error('Cal un banc de preguntes vàlid.');
@@ -74,7 +72,7 @@
     row.push(cell); if (row.some((v) => v.trim())) rows.push(row);
     if (!rows.length) throw Error('El fitxer CSV és buit.');
     const headers = rows.shift().map((v) => v.replace(/^\uFEFF/, '').trim().toLowerCase());
-    const required = ['id','bloc','tema','enunciat','opcio_a','opcio_b','opcio_c','opcio_d','correcta'];
+    const required = ['id','tema','enunciat','opcio_a','opcio_b','opcio_c','opcio_d','correcta'];
     for (const col of required) if (!headers.includes(col)) throw Error(`Al CSV falta la columna "${col}".`);
     return rows.map((cells, i) => {
       if (cells.length !== headers.length) throw Error(`Fila ${i + 2}: hi ha ${cells.length} columnes, però la capçalera en té ${headers.length}. Comprova les comes i les cometes.`);
@@ -93,7 +91,7 @@
     // una còpia CSV integrada a index.html per a la primera prova.
     if (location.protocol === 'file:') {
       const el = $('embeddedQuestionBank');
-      if (!el) throw Error('No hi ha banc CSV integrat a index.html.');
+      if (!el) throw Error('No hi ha cap banc CSV local. Importa un CSV a Preguntes.');
       return validateBank(parseCSV(el.textContent));
     }
     const response = await fetch(`./preguntes.csv?v=${Date.now()}`, {cache:'no-store'});
@@ -107,44 +105,31 @@
   function pruneMissed() { const ids = new Set(state.bank.map((q) => q.id)); state.missed = state.missed.filter((id) => ids.has(id)); setJSON(KEYS.missed, state.missed); }
   function commitBank(newBank) { state.bank = newBank; persistBank(); setJSON(KEYS.custom, true); pruneMissed(); renderAll(); }
 
-  function getBlocks() { return unique(state.bank.map((q) => q.bloc)).sort((a,b) => a-b); }
-  function getTopics(bloc) { return unique(state.bank.filter((q) => q.bloc === Number(bloc)).map((q) => q.tema)).sort(compareTopics); }
+  function getTopics() { return unique(state.bank.map((q) => q.tema)).sort(compareTopics); }
   function filteredQuestions() {
     if (state.scope === 'all') return state.bank;
-    const bloc = Number($('blockSelect').value);
-    if (state.scope === 'block') return state.bank.filter((q) => q.bloc === bloc);
-    const tema = $('topicSelect').value;
-    return state.bank.filter((q) => q.bloc === bloc && q.tema === tema);
+    return state.bank.filter((q) => q.tema === $('topicSelect').value);
   }
   function scopeText() {
-    if (state.scope === 'all') return 'Tot el temari';
-    const bloc = $('blockSelect').value;
-    return state.scope === 'block' ? `Bloc ${bloc} · Tots els temes` : `Bloc ${bloc} · Tema ${$('topicSelect').value}`;
+    return state.scope === 'all' ? 'Tot el temari' : `Lliçó ${$('topicSelect').value}`;
   }
   function renderSelectors() {
-    const previousBlock = $('blockSelect').value;
-    const blocks = getBlocks();
-    $('blockSelect').innerHTML = blocks.map((b) => `<option value="${b}">Bloc ${b}</option>`).join('');
-    if (blocks.includes(Number(previousBlock))) $('blockSelect').value = previousBlock;
-    else if (blocks.length) $('blockSelect').value = String(blocks[0]);
-    const topics = getTopics($('blockSelect').value);
+    const topics = getTopics();
     const previousTopic = $('topicSelect').value;
-    $('topicSelect').innerHTML = topics.map((t) => `<option value="${escapeHTML(t)}">Tema ${escapeHTML(t)}</option>`).join('');
+    $('topicSelect').innerHTML = topics.map((t) => `<option value="${escapeHTML(t)}">Lliçó ${escapeHTML(t)}</option>`).join('');
     if (topics.includes(previousTopic)) $('topicSelect').value = previousTopic;
     $('filterFields').hidden = state.scope === 'all';
-    $('topicField').hidden = state.scope !== 'topic';
-    const filtered = filteredQuestions();
-    const available = filtered.length;
+    const available = filteredQuestions().length;
     const chosen = Math.min(state.amount, available);
     const hint = $('availableHint');
-    if (!available) { hint.textContent = 'No hi ha preguntes en aquesta selecció. Importa’n o tria una altra categoria.'; }
+    if (!available) { hint.textContent = 'Encara no hi ha preguntes. Importa el CSV des de Preguntes.'; }
     else if (available < state.amount) { hint.textContent = `${available} disponibles. Com que n'has demanat ${state.amount}, el test tindrà ${chosen} preguntes (sense repetir).`; }
     else { hint.textContent = `${available} preguntes disponibles · El test tindrà ${chosen} preguntes aleatòries.`; }
     $('startBtn').disabled = !available;
   }
   function renderHome() {
     $('statQuestions').textContent = state.bank.length.toLocaleString('ca');
-    $('statTopics').textContent = unique(state.bank.map((q) => `${q.bloc}::${q.tema}`)).length;
+    $('statTopics').textContent = unique(state.bank.map((q) => q.tema)).length;
     $('statTests').textContent = state.history.length;
     $('statErrors').textContent = state.missed.length;
     $('pendingCount').textContent = `(${state.missed.length})`;
@@ -162,6 +147,8 @@
   function showView(view, force=false) {
     if (!force && state.active && view !== 'quiz' && !window.confirm('Tens un test començat. Vols sortir-ne? Es conservarà per continuar més endavant.')) return;
     state.view = view;
+    document.body.classList.toggle('projection-mode', view === 'quiz' && state.projector);
+    if (view !== 'result') { state.projectKey = false; document.body.classList.remove('solution-projection'); }
     for (const element of document.querySelectorAll('.view')) element.hidden = element.id !== `${view}View`;
     for (const element of document.querySelectorAll('.nav-link')) element.classList.toggle('active', element.dataset.nav === view);
     hideNotice();
@@ -212,6 +199,8 @@
     const item = quiz.items[quiz.current], q = getActiveQuestion(quiz.current);
     if (!q) { showNotice('Una de les preguntes del test ja no existeix. Comença un test nou.', 'error'); return; }
     $('quizScope').textContent = quiz.label;
+    $('projectionBtn').setAttribute('aria-pressed', String(state.projector));
+    $('projectionBtn').textContent = state.projector ? '▣ Sortir del projector' : '▣ Mode projector';
     $('questionMeta').textContent = questionLabel(q);
     $('quizHeading').textContent = q.enunciat;
     const answers = $('answerOptions'); answers.replaceChildren();
@@ -256,6 +245,28 @@
     state.active = null; persistActive(); persistActivity(); setJSON(KEYS.result, state.result);
     state.showAllReview = false; showView('result', true);
   }
+  // IMPORTANT: les opcions es barregen en cada test. El solucionari mostra
+  // la lletra en PANTALLA, no la lletra de la columna correcta del CSV.
+  function displayCorrectLetter(entry) {
+    const originalIndex = LETTERS.indexOf(entry.question.correcta);
+    const shownIndex = entry.order.indexOf(originalIndex);
+    return shownIndex >= 0 ? LETTERS[shownIndex] : '?';
+  }
+  function solutionText(result) {
+    return result.entries.map((entry, i) => `${i + 1} → ${displayCorrectLetter(entry)}`).join('\n');
+  }
+  async function copySolutions() {
+    if (!state.result) return;
+    const txt = `SSPC2026 — ${state.result.label}\n${solutionText(state.result)}`;
+    try {
+      if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(txt);
+      else {
+        const area = document.createElement('textarea'); area.value = txt; document.body.append(area);
+        area.select(); if (!document.execCommand('copy')) throw Error('No s’ha pogut copiar.'); area.remove();
+      }
+      showNotice('Solucionari copiat. Ja el pots enganxar on vulguis.');
+    } catch { showNotice('No s’ha pogut copiar. Pots utilitzar el botó Imprimir.', 'error'); }
+  }
   function resultStatus(entry) {
     if (entry.chosen === null) return 'blank';
     return LETTERS[entry.chosen] === entry.question.correcta ? 'right' : 'wrong';
@@ -271,6 +282,9 @@
     $('scoreWrong').textContent = result.wrong;
     $('scoreBlank').textContent = result.blank;
     $('resultScope').textContent = `${result.label} · ${total} preguntes · ${formatDate(result.date)} · ${Math.max(1,Math.round(result.elapsed / 60000))} min`;
+    $('projectKeyBtn').setAttribute('aria-pressed', String(state.projectKey));
+    $('projectKeyBtn').textContent = state.projectKey ? '↙ Vista completa' : '▣ Ampliar solucionari';
+    $('answerKeyGrid').innerHTML = result.entries.map((entry, i) => `<div class="answer-key-item"><span>${i+1}</span><span class="key-arrow">→</span><strong>${displayCorrectLetter(entry)}</strong></div>`).join('');
     $('toggleAllBtn').textContent = state.showAllReview ? 'Mostrar només errors' : 'Veure totes';
     $('repeatWrongBtn').disabled = !result.entries.some((e) => resultStatus(e) !== 'right' && Boolean(byId(e.id)));
     const entries = result.entries.map((e, index) => ({...e, number:index+1, status:resultStatus(e)}));
@@ -279,10 +293,10 @@
     $('reviewList').innerHTML = visible.length ? visible.map((entry) => {
       const q = entry.question;
       const correctOriginal = LETTERS.indexOf(q.correcta);
-      const correctShown = LETTERS[entry.order.indexOf(correctOriginal)];
+      const correctShown = displayCorrectLetter(entry);
       const chosenShown = entry.chosen === null ? null : LETTERS[entry.order.indexOf(entry.chosen)];
       const statusText = ({right:'ENCERTADA',wrong:'ERRÒNIA',blank:'SENSE RESPONDRE'})[entry.status];
-      return `<article class="review-item"><div class="review-top"><span class="review-meta">Pregunta ${entry.number} · Bloc ${q.bloc} · Tema ${escapeHTML(q.tema)}</span><span class="review-status ${entry.status}">${statusText}</span></div>
+      return `<article class="review-item"><div class="review-top"><span class="review-meta">Pregunta ${entry.number} · Lliçó ${escapeHTML(q.tema)}</span><span class="review-status ${entry.status}">${statusText}</span></div>
         <h3>${escapeHTML(q.enunciat)}</h3>
         ${entry.chosen === null ? '<p class="review-answer bad">No has marcat cap resposta.</p>' : `<p class="review-answer ${entry.status === 'right' ? 'good' : 'bad'}"><strong>La teva resposta:</strong> ${chosenShown} · ${escapeHTML(q.opcions[entry.chosen])}</p>`}
         <p class="review-answer good"><strong>Resposta correcta:</strong> ${correctShown} · ${escapeHTML(q.opcions[correctOriginal])}</p>
@@ -295,15 +309,15 @@
     makeQuiz(validIds, label);
   }
   function renderBank() {
-    const topics = unique(state.bank.map((q) => `${q.bloc}::${q.tema}`)).length;
+    const topics = unique(state.bank.map((q) => q.tema)).length;
     $('bankCount').textContent = state.bank.length;
     $('bankTopicCount').textContent = topics;
     $('removeDemoBtn').hidden = !state.bank.some((q) => q.demo);
     const search = $('bankSearch').value.toLocaleLowerCase('ca').trim();
-    const matching = state.bank.filter((q) => !search || [q.id, String(q.bloc), q.tema, q.origen ?? '', q.enunciat, ...q.opcions].join(' ').toLocaleLowerCase('ca').includes(search));
-    const sorted = [...matching].sort((a,b) => a.bloc-b.bloc || compareTopics(a.tema,b.tema) || a.id.localeCompare(b.id));
+    const matching = state.bank.filter((q) => !search || [q.id, q.tema, q.origen ?? '', q.enunciat, ...q.opcions].join(' ').toLocaleLowerCase('ca').includes(search));
+    const sorted = [...matching].sort((a,b) => compareTopics(a.tema,b.tema) || a.id.localeCompare(b.id));
     const visible = sorted.slice(0, 120);
-    $('questionList').innerHTML = visible.length ? visible.map((q) => `<article class="bank-question"><div class="bank-question-main"><small>Bloc ${q.bloc} · Tema ${escapeHTML(q.tema)} · ${escapeHTML(q.id)}</small>${q.origen ? `<small class="origen-tag">${escapeHTML(q.origen)}</small>` : ''}${q.demo ? '<small class="demo-tag">DEMO</small>' : ''}<strong>${escapeHTML(q.enunciat)}</strong></div><div class="bank-question-actions"><button type="button" data-edit-id="${escapeHTML(q.id)}">Editar</button><button type="button" data-delete-id="${escapeHTML(q.id)}">Eliminar</button></div></article>`).join('') : '<p class="empty-message">No hi ha preguntes que coincideixin amb aquesta cerca.</p>';
+    $('questionList').innerHTML = visible.length ? visible.map((q) => `<article class="bank-question"><div class="bank-question-main"><small>Lliçó ${escapeHTML(q.tema)} · ${escapeHTML(q.id)}</small>${q.origen ? `<small class="origen-tag">${escapeHTML(q.origen)}</small>` : ''}${q.demo ? '<small class="demo-tag">DEMO</small>' : ''}<strong>${escapeHTML(q.enunciat)}</strong></div><div class="bank-question-actions"><button type="button" data-edit-id="${escapeHTML(q.id)}">Editar</button><button type="button" data-delete-id="${escapeHTML(q.id)}">Eliminar</button></div></article>`).join('') : '<p class="empty-message">No hi ha preguntes que coincideixin amb aquesta cerca.</p>';
     $('bankListFoot').textContent = `Mostrant ${visible.length} de ${matching.length} preguntes${matching.length > 120 ? ' (afina la cerca per veure’n més)' : ''}.`;
     $('navBankCount').textContent = state.bank.length;
   }
@@ -315,14 +329,14 @@
       const q = byId(id); if (!q) return;
       $('editorHeading').textContent = 'Editar pregunta';
       $('editId').value = q.id; $('editId').readOnly = true;
-      $('editBloc').value = String(q.bloc); $('editTema').value = q.tema;
+      $('editTema').value = q.tema;
       $('editEnunciat').value = q.enunciat; $('editCorrecta').value = q.correcta;
       for (let i=0;i<4;i++) $(`edit${LETTERS[i]}`).value = q.opcions[i];
       $('editExplicacio').value = q.explicacio;
     } else {
       $('editorHeading').textContent = 'Afegir pregunta';
       $('editId').readOnly = false;
-      $('editBloc').value = '7';
+      $('editTema').value = getTopics()[0] || '1.1';
     }
     $('questionForm').hidden = false;
     $('questionForm').scrollIntoView({behavior:'smooth',block:'start'});
@@ -331,7 +345,7 @@
   function saveEditor(event) {
     event.preventDefault();
     const values = {
-      id:$('editId').value, bloc:$('editBloc').value, tema:$('editTema').value, enunciat:$('editEnunciat').value,
+      id:$('editId').value, tema:$('editTema').value, enunciat:$('editEnunciat').value,
       opcions:LETTERS.map((letter) => $(`edit${letter}`).value), correcta:$('editCorrecta').value,
       explicacio:$('editExplicacio').value, origen:state.editingId ? (byId(state.editingId)?.origen ?? '') : ''
     };
@@ -353,20 +367,19 @@
   function exportBank() {
     // Exportació CSV amb cometes escapades segons RFC 4180 i UTF-8 amb BOM.
     // Compatible amb Excel / LibreOffice, incloses comes i salts de línia.
-    const headers = ['id','bloc','tema','enunciat','opcio_a','opcio_b','opcio_c','opcio_d','correcta','explicacio','origen'];
+    const headers = ['id','tema','enunciat','opcio_a','opcio_b','opcio_c','opcio_d','correcta','explicacio'];
     const csvCell = (value) => {
       const text = String(value ?? '');
       return /[",\r\n]/.test(text) || /^\s|\s$/.test(text) ? `"${text.replace(/"/g,'""')}"` : text;
     };
-    const records = state.bank.map((q) => [q.id, q.bloc, q.tema, q.enunciat,
-      ...q.opcions, q.correcta, q.explicacio, q.origen ?? '']);
+    const records = state.bank.map((q) => [q.id, q.tema, q.enunciat, ...q.opcions, q.correcta, q.explicacio]);
     const content = '\uFEFF' + [headers, ...records].map((row) => row.map(csvCell).join(',')).join('\r\n') + '\r\n';
     downloadFile('preguntes.csv', content, 'text/csv;charset=utf-8');
   }
 
   function downloadTemplate() {
-    const columns = 'id,bloc,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio,origen';
-    const sample = '7.3-001,7,7.3,"Quina resposta és la correcta?","Opció A","Opció B","Opció C","Opció D",B,"Explicació opcional","Test del tema 7.3"';
+    const columns = 'id,tema,enunciat,opcio_a,opcio_b,opcio_c,opcio_d,correcta,explicacio';
+    const sample = '1.1-001,1.1,"Pregunta de demostració","Opció A","Opció B","Opció C","Opció D",B,"Explicació opcional"';
     downloadFile('plantilla-preguntes.csv', '\uFEFF' + columns + '\r\n' + sample + '\r\n', 'text/csv;charset=utf-8');
   }
   async function doImport(event) {
@@ -418,9 +431,12 @@
     });
     document.querySelectorAll('input[name="scope"]').forEach((el) => el.addEventListener('change', () => { state.scope = el.value; renderSelectors(); }));
     document.querySelectorAll('input[name="amount"]').forEach((el) => el.addEventListener('change', () => { state.amount = Number(el.value); renderSelectors(); }));
-    $('blockSelect').addEventListener('change', renderSelectors);
     $('topicSelect').addEventListener('change', renderSelectors);
     $('startBtn').addEventListener('click', startSelectedQuiz);
+    $('projectionBtn').addEventListener('click', () => { state.projector = !state.projector; document.body.classList.toggle('projection-mode', state.projector && state.view === 'quiz'); renderQuiz(); });
+    $('projectKeyBtn').addEventListener('click', () => { state.projectKey = !state.projectKey; document.body.classList.toggle('solution-projection', state.projectKey); renderResults(); if (state.projectKey) $('answerKeyPanel').scrollIntoView({block:'start'}); });
+    $('copyKeyBtn').addEventListener('click', copySolutions);
+    $('printKeyBtn').addEventListener('click', () => window.print());
     $('resumeBtn').addEventListener('click', () => { if (state.active) showView('quiz', true); });
     $('discardBtn').addEventListener('click', () => { if (state.active && window.confirm('Vols descartar el test que tens a mitges?')) { state.active = null; persistActive(); renderHome(); showNotice('Test descartat.'); } });
     $('repeatSavedBtn').addEventListener('click', () => repeatQuestions(state.missed, 'Repàs d’errors pendents'));
@@ -467,7 +483,7 @@
     bindEvents();
     if (location.protocol === 'file:') {
       $('resetBankBtn').textContent = 'Restaurar banc inicial';
-      $('resetBankBtn').title = 'Recupera les preguntes CSV integrades a index.html';
+      $('resetBankBtn').title = 'Recupera la capçalera CSV integrada a index.html';
     }
     state.history = getJSON(KEYS.history, []);
     if (!Array.isArray(state.history)) state.history = [];
@@ -477,28 +493,10 @@
     try {
       state.defaultBank = await fetchDefault(); state.fileLoaded = true;
     } catch (error) {
-      showNotice('No s’ha pogut carregar el banc. Comprova que preguntes.csv sigui a l’arrel de GitHub o utilitza Importar CSV.', 'error');
+      showNotice('No s’ha pogut carregar preguntes.csv. Comprova el fitxer a GitHub o importa un CSV.', 'error');
     }
     const localBank = getJSON(KEYS.bank, null);
     let useLocal = getJSON(KEYS.custom, null) === true;
-    // Migració de 2.1: les còpies exactes de les 59 preguntes originals
-    // no han de bloquejar actualitzacions futures del CSV de GitHub.
-    // En canvi, preservem els bancs antics que l'usuari hagi modificat.
-    if (getJSON(KEYS.custom, null) === null && localBank !== null) {
-      try {
-        const embedded = validateBank(parseCSV($('embeddedQuestionBank').textContent));
-        if (JSON.stringify(validateBank(localBank)) !== JSON.stringify(embedded)) {
-          useLocal = true;
-          setJSON(KEYS.custom, true);
-          showNotice('Hem preservat un banc modificat al navegador de la versió anterior. Per carregar el CSV actual de GitHub, ves a Preguntes → Restaurar CSV de GitHub (exporta abans els canvis locals).', 'info');
-        } else {
-          localStorage.removeItem(KEYS.bank);
-        }
-      } catch {
-        useLocal = true;
-        setJSON(KEYS.custom, true);
-      }
-    }
     try { state.bank = useLocal && localBank !== null ? validateBank(localBank) : state.defaultBank; }
     catch { state.bank = state.defaultBank; localStorage.removeItem(KEYS.custom); showNotice('El banc local era invàlid. S’ha recuperat el CSV del repositori.', 'error'); }
     pruneMissed();
